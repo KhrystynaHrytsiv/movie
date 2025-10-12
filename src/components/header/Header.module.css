@@ -1,0 +1,25 @@
+.header{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 15vh;
+    background-color: #9d629d;
+    color: #eebaee;
+    font-size: 25px;
+}
+.header a{
+    text-decoration: none;
+    color: #eebaee;
+}
+.photo{
+    height: 10vh;
+    width: 5vw;
+}
+.light{
+    background-color:plum;
+    color: #4b2a4b;
+}
+.dark{
+    background-color: #9d629d;
+    color:#eebaee;
+}
