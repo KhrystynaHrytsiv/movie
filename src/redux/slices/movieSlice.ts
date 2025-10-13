@@ -7,21 +7,19 @@ import {AxiosError} from "axios";
 interface IState {
     movies:IMovie[],
     errors: boolean,
-    prevPage:IPagination<any>,
-    nextPage:IPagination<any>
+    page:number
 }
 const initialState:IState ={
     movies:[],
     errors: null,
-    prevPage: null,
-    nextPage: null
+    page: null
 }
 
 const getAll = createAsyncThunk<IPagination<IMovie>, void>(
     'movieSlice/getAll',
     async (_, {rejectWithValue} ) =>{
         try{
-           const {data} = await movieService.getAll();
+           const {data} = await movieService.getAll(1);
            return data
         } catch (e) {
             const err = e as AxiosError
@@ -33,11 +31,18 @@ const getAll = createAsyncThunk<IPagination<IMovie>, void>(
 const movieSlice = createSlice({
     name: 'movieSlice',
     initialState,
-    reducers:{},
+    reducers:{
+        // pagination: (state, action) =>{
+        // state.prevPage = action.payload.prev
+        // state.nextPage = action.payload.next
+// }
+    },
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action)=>{
-                state.movies = action.payload.results
+                const {page, results} = action.payload;
+                state.movies = results;
+                state.page = page
             })
             .addCase(getAll.rejected, state => {
                 state.errors = true
