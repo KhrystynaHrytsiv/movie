@@ -10,6 +10,9 @@ const urls ={
         base: discover,
         byId: (id: number): string => `${movies}/${id}`
     },
-    genres
+    genres:{
+        base: genres,
+        byId:(id:number):string => `${genres}/${id}`
+    }
 }
  export {baseURL, urls, poster}
