@@ -1,12 +1,15 @@
 import React from 'react';
-import {useAppSelector} from "../../hook/reduxHooks";
+import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {useSearchParams} from "react-router-dom";
+import {movieActions} from "../../redux/slices/movieSlice";
 
 const Pagination = () => {
-    // const {nextPage, prevPage} = useAppSelector(state => state.movies);
+  const {page} = useAppSelector(state => state.movies);
+  const dispatch = useAppDispatch();
     const [, setQuery] = useSearchParams();
 
     const prev =()=>{
+        dispatch(movieActions.setPage(page -1))
         setQuery(prev1 => {
             prev1.set('page', `${+prev1.get('page')-1}`)
             return prev1
@@ -14,15 +17,17 @@ const Pagination = () => {
     }
 
     const next =()=>{
+        dispatch(movieActions.setPage(page+1))
         setQuery(prev1 => {
-            prev1.set('page', `${+prev1.get('page')+1}`)
-            return prev1
-        })
+                    prev1.set('page', `${+prev1.get('page')+1}`)
+                    return prev1
+                })
     }
+
     return (
         <div>
-            <button onClick={prev}>prev</button>
-            <button onClick={next}>next</button>
+            <button disabled={!prev} onClick={prev}>prev</button>
+            <button disabled={!next} onClick={next}>next</button>
         </div>
     );
 };
