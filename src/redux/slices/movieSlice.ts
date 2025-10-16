@@ -8,11 +8,13 @@ interface IState {
     movies:IMovie[],
     errors: boolean,
     page: number,
+    total_page: number
 }
 const initialState:IState ={
     movies:[],
     errors: null,
     page: 1,
+    total_page:5790
 }
 
 const getAll = createAsyncThunk<IPagination<IMovie>,{page:number}>(
@@ -34,6 +36,7 @@ const movieSlice = createSlice({
     reducers:{
         setPage: (state, action)=>{
             state.page = action.payload;
+
         }
 
     },
@@ -41,6 +44,7 @@ const movieSlice = createSlice({
         builder
             .addCase(getAll.fulfilled, (state, action)=>{
                 state.movies = action.payload.results;
+                // state.page = action.payload.page;
 
             })
             .addCase(getAll.rejected, state => {
