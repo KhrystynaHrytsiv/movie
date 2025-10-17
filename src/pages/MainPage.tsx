@@ -8,7 +8,7 @@ const MainPage = () => {
     return (
         <div>
             <Header/>
-            {/*<Sorting/>*/}
+            <Sorting/>
           <Outlet/>
             <Pagination/>
         </div>
