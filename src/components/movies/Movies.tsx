@@ -3,16 +3,12 @@ import css from './Movies.module.css'
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {movieActions} from "../../redux/slices/movieSlice";
 import {Movie} from "./Movie";
-import {useSearchParams} from "react-router-dom";
+import {MovieCard} from "./MovieCard";
+
 
 const Movies = () => {
     const {movies, page} = useAppSelector(state => state.movies);
     const dispatch = useAppDispatch();
-    const [, setQuery] = useSearchParams({page:'1'});
-    // const page = query.get('page')  ;
-    useEffect(() => {
-        setQuery({page: '1'})
-    }, [page]);
 
     useEffect(() => {
         dispatch(movieActions.getAll({page}))
@@ -22,6 +18,7 @@ const Movies = () => {
     return (
         <div className={css.Movies}>
             {movies.map(movie => <Movie key={movie.id} movie={movie}/>)}
+
 
         </div>
     );
