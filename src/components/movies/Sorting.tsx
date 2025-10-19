@@ -9,13 +9,13 @@ const Sorting = () => {
     const {genres} = useAppSelector(state => state.genres);
     const [selectGenre, setSelectGenre] = useState('all genres')
     const [sorting, setSorting] = useState('types')
+    const dispatch = useAppDispatch();
     const sorting_movies = [
         {name: ' popular'},
         {name: ' top rated'},
         {name: ' upcoming'},
-        
+
     ]
-    const dispatch = useAppDispatch();
 
 
     useEffect( () => {

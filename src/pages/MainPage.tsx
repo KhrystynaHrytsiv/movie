@@ -10,7 +10,7 @@ const MainPage = () => {
             <Header/>
             {/*<Sorting/>*/}
           <Outlet/>
-            <Pagination/>
+            {/*<Pagination/>*/}
         </div>
     );
 };

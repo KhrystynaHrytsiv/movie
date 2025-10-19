@@ -1,12 +1,13 @@
 import {createBrowserRouter, Navigate} from "react-router-dom";
 import {MainPage, MoviePage} from "./pages";
-import {MovieCard} from "./components/movies/MovieCard";
+import {MovieDetailsPage} from "./pages/MovieDetailsPage";
+import {movieService} from "./services";
 
 const router = createBrowserRouter([
     {path: '', element:<MainPage/>  , children:[
             {index:true, element:<Navigate to={'movies'}/>},
             {path: 'movies', element:<MoviePage/>},
-            {path: 'movies/:id', element:<MovieCard/>}
+            {path: 'movies/:id/:title', element:<MovieDetailsPage/>, loader: ({params:{id}}) => movieService.getById(+id)}
         ]}
 ]);
 

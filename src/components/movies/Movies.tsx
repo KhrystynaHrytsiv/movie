@@ -3,7 +3,6 @@ import css from './Movies.module.css'
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {movieActions} from "../../redux/slices/movieSlice";
 import {Movie} from "./Movie";
-import {MovieCard} from "./MovieCard";
 
 
 const Movies = () => {

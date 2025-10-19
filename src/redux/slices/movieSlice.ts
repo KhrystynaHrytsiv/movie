@@ -8,13 +8,14 @@ interface IState {
     movies:IMovie[],
     errors: boolean,
     page: number,
-    total_page: number
+    filter: IMovie[]
+
 }
 const initialState:IState ={
     movies:[],
     errors: null,
     page: 1,
-    total_page:5790
+    filter: []
 }
 
 const getAll = createAsyncThunk<IPagination<IMovie>,{page:number}>(
@@ -29,6 +30,16 @@ const getAll = createAsyncThunk<IPagination<IMovie>,{page:number}>(
         }
     }
 )
+// const getById =createAsyncThunk<IMovie, {id:number}>(
+//     'movieSlice/getById',
+//     async ({id}, {rejectWithValue})=>{
+//         try{
+//             await movieService.getById(id)
+//         } catch (e) {
+//            return  rejectWithValue(e)
+//         }
+//     }
+// )
 
 const movieSlice = createSlice({
     name: 'movieSlice',
@@ -37,6 +48,10 @@ const movieSlice = createSlice({
         setPage: (state, action)=>{
             state.page = action.payload;
 
+        },
+        filtered:(state, action) =>{
+            const sorting =action.payload
+            state.filter = state.movies.filter(m=> m.genres.includes(sorting))
         }
 
     },
@@ -44,7 +59,8 @@ const movieSlice = createSlice({
         builder
             .addCase(getAll.fulfilled, (state, action)=>{
                 state.movies = action.payload.results;
-                // state.page = action.payload.page;
+                // state.filter = action.payload
+                state.page = action.payload.page;
 
             })
             .addCase(getAll.rejected, state => {
