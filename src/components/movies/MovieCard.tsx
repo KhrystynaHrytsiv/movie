@@ -9,18 +9,18 @@ interface IProps extends PropsWithChildren{
 }
 
 const MovieCard: FC<IProps> = ({movie}) => {
-    const {original_title, poster_path, overview, release_date, vote_average, popularity, title, genres, people} = movie;
+    const {poster_path, overview, release_date, vote_average, popularity, title, genres} = movie;
     const navigate = useNavigate();
 
     return (
         <div className={css.details}>
-             <h2> {original_title}</h2>
+             <h2> {title}</h2>
              <img src={`${poster}/${poster_path}`} alt={title}/>`
              <p> {overview}</p>
              <div> Release date: {release_date}</div>
              <div> Vote average: {vote_average}</div>
              <div> Popularity: {popularity}</div>
-            <p onClick={()=> navigate(`/genre`)}>Genres: {genres? genres.map(genre => genre.name).join(', '): 'No genres'}</p>
+            <p onClick={()=> navigate(`/movies/genreId`)}>Genres: {genres? genres.map(genre => genre.name).join(', '): 'No genres'}</p>
             {/*<div>Actors: {people? people.map(person => <div>{person.name} <img src={person.profile_path} alt={person.name}/></div>): 'No one'}</div>*/}
 
         </div>

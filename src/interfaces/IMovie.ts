@@ -4,6 +4,7 @@ import {IPeople} from "./IPeople";
 export interface IMovie {
     id: number,
     original_title: string,
+    genre_ids:number[]
     genres: IGenre[],
     overview: string,
     popularity: number

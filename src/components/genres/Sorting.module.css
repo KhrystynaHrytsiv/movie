@@ -1,0 +1,15 @@
+.sort {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
+}
+.sort>div{
+    height: 100px;
+    width: 23%;
+    margin: 10px;
+    font-size: 35px;
+
+
+}

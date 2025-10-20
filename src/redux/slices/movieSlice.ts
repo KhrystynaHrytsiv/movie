@@ -7,22 +7,22 @@ import {AxiosError} from "axios";
 interface IState {
     movies:IMovie[],
     errors: boolean,
-    page: number,
-    filter: IMovie[]
+    filter: IMovie[],
+    page:number
 
 }
 const initialState:IState ={
     movies:[],
     errors: null,
-    page: 1,
-    filter: []
+    filter: [],
+    page:1
 }
 
-const getAll = createAsyncThunk<IPagination<IMovie>,{page:number}>(
+const getAll = createAsyncThunk<IPagination<IMovie>,{page:number, genreId?: number}>(
     'movieSlice/getAll',
-    async ({page}, {rejectWithValue} ) =>{
+    async ({page, genreId}, {rejectWithValue} ) =>{
         try{
-           const {data} = await movieService.getAll(page);
+           const {data} = await movieService.getAll(page, genreId);
            return data
         } catch (e) {
             const err = e as AxiosError
@@ -30,16 +30,6 @@ const getAll = createAsyncThunk<IPagination<IMovie>,{page:number}>(
         }
     }
 )
-// const getById =createAsyncThunk<IMovie, {id:number}>(
-//     'movieSlice/getById',
-//     async ({id}, {rejectWithValue})=>{
-//         try{
-//             await movieService.getById(id)
-//         } catch (e) {
-//            return  rejectWithValue(e)
-//         }
-//     }
-// )
 
 const movieSlice = createSlice({
     name: 'movieSlice',
@@ -50,8 +40,11 @@ const movieSlice = createSlice({
 
         },
         filtered:(state, action) =>{
-            const sorting =action.payload
-            state.filter = state.movies.filter(m=> m.genres.includes(sorting))
+            const genre =action.payload
+            state.filter = state.movies.filter((m) => Array.isArray(m.genre_ids) && m.genre_ids.includes(genre))
+        },
+        showAll: state => {
+            state.filter = state.movies;
         }
 
     },
@@ -59,7 +52,7 @@ const movieSlice = createSlice({
         builder
             .addCase(getAll.fulfilled, (state, action)=>{
                 state.movies = action.payload.results;
-                // state.filter = action.payload
+                state.filter = action.payload.results
                 state.page = action.payload.page;
 
             })

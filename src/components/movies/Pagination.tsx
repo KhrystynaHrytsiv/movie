@@ -4,7 +4,7 @@ import {useSearchParams} from "react-router-dom";
 import {movieActions} from "../../redux/slices/movieSlice";
 
 const Pagination = () => {
-  const {page, total_page} = useAppSelector(state => state.movies);
+  const {page} = useAppSelector(state => state.movies);
   const dispatch = useAppDispatch();
     const [, setQuery] = useSearchParams({page:'1'});
 
@@ -25,9 +25,9 @@ const Pagination = () => {
     }
 
     return (
-        <div>
-            <button disabled={page===1} onClick={prev}>prev</button>
-            <button disabled={page===total_page} onClick={next}>next</button>
+        <div style={{justifyContent:'space-between', display:'flex', height: '30px', width:'300px'}}>
+            <button disabled={page===1} onClick={prev} style={{height: '30px', width:'100px',  background:'#a6eaea', color: '#01012c'}}>prev</button>
+            <button disabled={page>=500} onClick={next} style={{height: '30px', width:'100px',  background:'#a6eaea', color: '#01012c'}}>next</button>
         </div>
     );
 };
