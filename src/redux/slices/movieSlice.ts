@@ -8,14 +8,15 @@ interface IState {
     movies:IMovie[],
     errors: boolean,
     filter: IMovie[],
-    page:number
-
+    page:number,
+    genreId: null,
 }
 const initialState:IState ={
     movies:[],
     errors: null,
     filter: [],
-    page:1
+    page:1,
+    genreId:null,
 }
 
 const getAll = createAsyncThunk<IPagination<IMovie>,{page:number, genreId?: number}>(
@@ -37,14 +38,17 @@ const movieSlice = createSlice({
     reducers:{
         setPage: (state, action)=>{
             state.page = action.payload;
-
         },
-        filtered:(state, action) =>{
-            const genre =action.payload
-            state.filter = state.movies.filter((m) => Array.isArray(m.genre_ids) && m.genre_ids.includes(genre))
+        setGenre: (state, action)=>{
+           state.genreId = action.payload
         },
+        // filtered:(state, action) =>{
+        //     const genre =action.payload
+        //     state.filter = state.movies.filter((m) => Array.isArray(m.genre_ids) && m.genre_ids.includes(genre))
+        // },
         showAll: state => {
             state.filter = state.movies;
+            state.genreId = null;
         }
 
     },

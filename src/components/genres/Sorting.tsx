@@ -10,7 +10,6 @@
 //
 //
 //         </form>
-
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {movieActions} from "../../redux/slices/movieSlice";
@@ -23,10 +22,16 @@ const Sorting = () => {
     const {genres} = useAppSelector(state => state.genres);
     const navigate = useNavigate();
 
-    const filterMovie =(genreId?: number) =>{
-        dispatch(movieActions.getAll({page:1, genreId}));
-        dispatch(movieActions.setPage(1));
-        navigate(`/movies`)
+    const filterMovie =(genreName?:string, genreId?: number) =>{
+        if (genreId) {
+            dispatch(movieActions.setGenre(genreId));
+            dispatch(movieActions.getAll({ page: 1, genreId }));
+            dispatch(movieActions.setPage(1));
+            navigate(`/movies/${genreName}`);
+        } else {
+            dispatch(movieActions.showAll());
+            navigate(`/movies`);
+        }
     }
 
     useEffect(() => {
@@ -36,7 +41,7 @@ const Sorting = () => {
         <div  className={css.sort}>
             <div onClick={() => filterMovie()}> All </div>
             {genres.map(genre => (
-                <div onClick={() => filterMovie(genre.id)}> {genre.name} </div>
+                <div onClick={() => filterMovie(genre.name, genre.id)}> {genre.name} </div>
             ))}
 
         </div>
@@ -44,8 +49,3 @@ const Sorting = () => {
 };
 
 export {Sorting};
-
-// <button onClick={() => dispatch(movieActions.showAll())}> All </button>
-// {genres.map(genre =>(
-//     <button onClick={() => dispatch(movieActions.filtered(genre.id))}> {genre.name}</button>
-// ))}

@@ -3,6 +3,7 @@ import {IMovie} from "../../interfaces/IMovie";
 import {poster} from "../../services";
 import css from './Movie.module.css'
 import {useNavigate} from "react-router-dom";
+import {Stars} from "../rating/Stars";
 
 interface IProps extends PropsWithChildren{
     movie:IMovie
@@ -15,7 +16,7 @@ const Movie: FC<IProps> = ({movie}) => {
         <div className={css.movie}>
             <img src={`${poster}/${poster_path}`} alt={title} className={css.img} onClick={()=> navigate(`/movies/${id}/${title}`)}/>
             <h3> {title} </h3>
-            <div>{vote_average}</div>
+            <Stars rating={vote_average}/>
         </div>
     );
 };

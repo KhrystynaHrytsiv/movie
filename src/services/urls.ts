@@ -3,6 +3,7 @@ const movies = '/movie';
 const discover = '/discover/movie';
 const genres = '/genre/movie/list';
 const people = '/person/popular';
+const search = '/search/movie'
 
 const poster = `https://image.tmdb.org/t/p/w500`
 
@@ -18,6 +19,7 @@ const urls ={
     people:{
       base: people,
       byId:(id: number) => `${people}/${id}`
-    }
+    },
+    search
 }
  export {baseURL, urls, poster}
