@@ -2,7 +2,6 @@ const baseURL = 'https://api.themoviedb.org/3'
 const movies = '/movie';
 const discover = '/discover/movie';
 const genres = '/genre/movie/list';
-const people = '/person/popular';
 const search = '/search/movie'
 
 const poster = `https://image.tmdb.org/t/p/w500`
@@ -15,10 +14,6 @@ const urls ={
     genres:{
         base: genres,
         byId:(id:number):string => `${genres}/${id}`
-    },
-    people:{
-      base: people,
-      byId:(id: number) => `${people}/${id}`
     },
     search
 }

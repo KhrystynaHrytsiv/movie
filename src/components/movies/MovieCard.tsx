@@ -32,8 +32,6 @@ const MovieCard: FC<IProps> = ({movie}) => {
             <div> Popularity: {popularity}</div>
             <p>Genres: {genres.map(genre => (
                 <span onClick={() => goToSorting(genre.name, genre.id)}> {genre.name} </span>))}</p>
-            {/*<div>Actors: {people? people.map(person => <div>{person.name} <img src={person.profile_path} alt={person.name}/></div>): 'No one'}</div>*/}
-
         </div>
     );
 };
