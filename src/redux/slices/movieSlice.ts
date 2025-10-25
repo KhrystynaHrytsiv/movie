@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isFulfilled, isRejected} from "@reduxjs/toolkit";
 import {IMovie} from "../../interfaces/IMovie";
 import {IPagination} from "../../interfaces/IPagination";
 import {movieService} from "../../services";
@@ -10,6 +10,7 @@ interface IState {
     filter: IMovie[],
     page:number,
     genreId: null,
+
 }
 const initialState:IState ={
     movies:[],
@@ -31,7 +32,17 @@ const getAll = createAsyncThunk<IPagination<IMovie>,{page:number, genreId?: numb
         }
     }
 )
-
+const search = createAsyncThunk<IPagination<IMovie>,{query:string, page?: number} >(
+    'movieSlice/search',
+    async ({query, page}, {rejectWithValue})=>{
+       try{
+         const {data} = await movieService.search(query, page);
+         return data
+       } catch (e) {
+           return rejectWithValue(e)
+       }
+    }
+)
 const movieSlice = createSlice({
     name: 'movieSlice',
     initialState,
@@ -54,20 +65,20 @@ const movieSlice = createSlice({
     },
     extraReducers: builder =>
         builder
-            .addCase(getAll.fulfilled, (state, action)=>{
+            .addMatcher(isFulfilled(getAll, search), (state, action)=>{
                 state.movies = action.payload.results;
                 state.filter = action.payload.results
                 state.page = action.payload.page;
 
             })
-            .addCase(getAll.rejected, state => {
+            .addMatcher(isRejected(getAll, search), state => {
                 state.errors = true
             })
 
 
 });
 const {reducer:movieReducer, actions} = movieSlice;
-const movieActions = {...actions, getAll}
+const movieActions = {...actions, getAll, search}
 
 export {movieReducer, movieActions}
 

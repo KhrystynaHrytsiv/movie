@@ -1,6 +1,7 @@
 import React from 'react';
+import {Search} from "../components/search/Search";
 
-const Search = () => {
+const SearchPage = () => {
     return (
         <div>
             <Search/>
@@ -8,4 +9,4 @@ const Search = () => {
     );
 };
 
-export {Search};
+export {SearchPage};

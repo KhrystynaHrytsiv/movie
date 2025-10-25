@@ -1,15 +1,3 @@
-//         <form onSubmit={handleSubmit(choose)}>
-//             <select value={selectGenre} onChange={(e) => setSelectGenre(e.target.value)}>
-//                 {genres.map(genre => (
-//                     <option key={genre.id}> {genre.name}</option>))}
-//             </select>
-//             <select value={sorting} onChange={(e) => setSorting(e.target.value)}>
-//                 <option>{sorting_movies.map(movie => <div>{movie.name}</div>)} </option>
-//             </select>
-//             <button> search</button>
-//
-//
-//         </form>
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {movieActions} from "../../redux/slices/movieSlice";

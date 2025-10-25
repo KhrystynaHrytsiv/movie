@@ -1,0 +1,29 @@
+import React, {FormEvent, useState} from 'react';
+import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
+import {movieActions} from "../../redux/slices/movieSlice";
+import {Movie} from "../movies/Movie";
+import {Pagination} from "../pagination/Pagination";
+import css from './Search.module.css'
+
+const Search = () => {
+    const [query, setQuery] = useState('')
+    const dispatch = useAppDispatch();
+    const {filter} = useAppSelector(state => state.movies);
+
+    const search =(e:FormEvent<HTMLFormElement>)=>{
+        e.preventDefault();
+        if(query.trim()){
+            dispatch(movieActions.search({query}))
+        }
+    }
+    return (
+        <form onSubmit={search} className={css.search}>
+            <input type={'text'} value={query} placeholder={'search'} onChange={(e)=>setQuery(e.target.value)} className={css.input}/>
+            <button className={css.button}>search</button>
+            <div className={css.search}>{filter.map(m=><Movie movie={m} key={m.id}/>)}</div>
+            {filter.length> 20 && <Pagination/>}
+        </form>
+    );
+};
+
+export {Search};

@@ -1,0 +1,21 @@
+.search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+.input{
+    height: 5vh;
+    width: 30vw;
+    margin: 10px;
+    background-color: beige;
+    color: black;
+    border:#443f4f;
+}
+.button{
+    height: 5vh;
+    width: 10vw;
+    background-color:beige;
+    border:#443f4f;
+}

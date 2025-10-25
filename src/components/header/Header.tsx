@@ -1,9 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import css from './Header.module.css'
+import {useAppDispatch} from "../../hook/reduxHooks";
+import {movieActions} from "../../redux/slices/movieSlice";
 
 const Header = () => {
     const [theme, setTheme] = useState('light')
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         document.body.className = theme === 'light' ? css.light : css.dark;
@@ -13,10 +17,16 @@ const Header = () => {
         setTheme(prev =>(prev=== 'light' ? 'dark': 'light') )
     }
 
+    const movies = () => {
+        dispatch(movieActions.setGenre(null));
+        dispatch(movieActions.showAll());
+        dispatch(movieActions.getAll({ page: 1 }));
+        navigate("/movies");
+    };
 
     return (
         <div className={css.header}>
-            <Link to={'movies'}>Movies</Link>
+            <div onClick={movies}>Movies</div>
             <Link to={'genres'}>Genres</Link>
             <Link to={'search'}>Search</Link>
             <div onClick={changeTheme}>{theme === 'light' ? '🌙' : '☀️'} Theme</div>
