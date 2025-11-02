@@ -6,16 +6,20 @@
 
 }
 .input{
-    height: 5vh;
+    height: 6vh;
     width: 30vw;
     margin: 10px;
-    background-color: beige;
-    color: black;
-    border:#443f4f;
+    background-color: #1fb9b9;
+    color:#01012c;
+    border: none;
+    border-radius: 5px;
 }
 .button{
-    height: 5vh;
+    height: 6vh;
     width: 10vw;
-    background-color:beige;
-    border:#443f4f;
+    background-color: #1fb9b9;
+    color: #01012c;
+    border: none;
+    border-radius: 5px;
 }
+

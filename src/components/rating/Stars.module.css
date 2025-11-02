@@ -26,9 +26,9 @@
 }
 
 .half {
-    background: linear-gradient(90deg, gold 50%, #504b5e 50%);
+    background: linear-gradient(90deg, #ddc316 50%, #2f2e2e 50%);
 }
 
 .star.empty {
-    background: #443f4f;
+    background: #2f2e2e;
 }
