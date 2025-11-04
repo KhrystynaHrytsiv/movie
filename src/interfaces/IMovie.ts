@@ -1,5 +1,5 @@
 import {IGenre} from "./IGenre";
-import {IPeople} from "./IPeople";
+import {IVideo} from "./IVideo";
 
 export interface IMovie {
     id: number,
@@ -13,5 +13,5 @@ export interface IMovie {
     title: string,
     vote_average: number,
     vote_count: number,
-    people: IPeople[]
+    video: IVideo[]
 }

@@ -1,6 +1,5 @@
 import {createAsyncThunk, createSlice, isFulfilled, isRejected} from "@reduxjs/toolkit";
-import {IMovie} from "../../interfaces/IMovie";
-import {IPagination} from "../../interfaces/IPagination";
+import {IImage, IMovie, IPagination, IPeople, IVideo} from "../../interfaces";
 import {movieService} from "../../services";
 import {AxiosError} from "axios";
 
@@ -10,6 +9,9 @@ interface IState {
     filter: IMovie[],
     page:number,
     genreId: null,
+    video: IVideo[],
+    images: IImage[],
+    actors: IPeople[]
 
 }
 const initialState:IState ={
@@ -18,6 +20,9 @@ const initialState:IState ={
     filter: [],
     page:1,
     genreId:null,
+    video: [],
+    images: [],
+    actors: []
 }
 
 const getAll = createAsyncThunk<IPagination<IMovie>,{page:number, genreId?: number}>(
@@ -43,6 +48,39 @@ const search = createAsyncThunk<IPagination<IMovie>,{query:string, page?: number
        }
     }
 )
+const getVideo = createAsyncThunk<IVideo[], {id:number}>(
+    'movieSlice/getVideo',
+    async ({id}, {rejectWithValue})=>{
+        try {
+            const {data} = await movieService.video(id);
+            return data.results
+        } catch (e) {
+            return rejectWithValue(e)
+        }
+    }
+)
+const getImages = createAsyncThunk<IImage[], {id:number}>(
+    'movieSlice/getImages',
+    async ({id}, {rejectWithValue})=>{
+        try {
+            const {data} = await movieService.images(id);
+            return data.backdrops
+        } catch (e) {
+            return rejectWithValue(e)
+        }
+    }
+)
+const getActors = createAsyncThunk<IPeople[], {id:number}>(
+    'movieSlice/getActors',
+    async ({id}, {rejectWithValue}) => {
+        try {
+           const {data} = await movieService.people(id);
+           return data.cast
+        } catch (e) {
+            return rejectWithValue(e)
+        }
+    }
+)
 const movieSlice = createSlice({
     name: 'movieSlice',
     initialState,
@@ -65,20 +103,29 @@ const movieSlice = createSlice({
     },
     extraReducers: builder =>
         builder
+            .addCase(getVideo.fulfilled, (state, action) => {
+                state.video = action.payload
+            })
+            .addCase(getImages.fulfilled, (state, action)=>{
+                state.images = action.payload
+            })
+            .addCase(getActors.fulfilled, (state, action)=>{
+                state.actors = action.payload
+            })
             .addMatcher(isFulfilled(getAll, search), (state, action)=>{
                 state.movies = action.payload.results;
                 state.filter = action.payload.results
                 state.page = action.payload.page;
 
             })
-            .addMatcher(isRejected(getAll, search), state => {
+            .addMatcher(isRejected(getAll, search, getVideo, getImages, getActors), state => {
                 state.errors = true
             })
 
 
 });
 const {reducer:movieReducer, actions} = movieSlice;
-const movieActions = {...actions, getAll, search}
+const movieActions = {...actions, getAll, search, getVideo, getImages, getActors}
 
 export {movieReducer, movieActions}
 

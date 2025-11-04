@@ -1,0 +1,7 @@
+export * from './IRes'
+export * from './IMovie'
+export * from './IGenre'
+export * from './IPagination'
+export * from './IVideo'
+export * from './IImage'
+export * from './IPeople'
