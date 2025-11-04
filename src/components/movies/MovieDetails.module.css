@@ -1,7 +1,40 @@
-.details{
+.movieContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
+    padding: 30px;
+}
+.details{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    text-align: start;
+    font-size: 26px;
+    line-height: 1.5;
+}
+.movieTitle {
+    display: flex;
     justify-content: center;
-    text-align: center;
     font-size: 30px;
-    padding: 40px;
+    font-weight: bold;
+    margin: 20px;
+}
+.moviePoster {
+    width: 425px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.movieDescription {
+    display: flex;
+    justify-content: center;
+    max-width: 750px;
+    font-size: 25px;
+    line-height: 1.5;
+}
+.genres{
+    font-size: 30px;
+    word-spacing: 20px;
 }

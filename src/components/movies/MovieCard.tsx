@@ -23,16 +23,21 @@ const MovieCard: FC<IProps> = ({movie}) => {
     };
 
     return (
-        <div className={css.details}>
-            <h2> {title}</h2>
-            <img src={`${poster}/${poster_path}`} alt={title}/>`
-            <p> {overview}</p>
+        <>
+            <h2 className={css.movieTitle}> {title}</h2>
+        <div className={css.movieContent}>
+            <img src={`${poster}/${poster_path}`} alt={title} className={css.moviePoster}/>
+            <div className={css.details}>
+            <p className={css.movieDescription}> {overview}</p>
             <div> Release date: {release_date}</div>
             <div> Vote average: {vote_average}</div>
             <div> Popularity: {popularity}</div>
-            <p>Genres: {genres.map(genre => (
+            <p className={css.genres}>Genres: {genres.map(genre => (
                 <span onClick={() => goToSorting(genre.name, genre.id)}> {genre.name} </span>))}</p>
+
         </div>
+        </div>
+        </>
     );
 };
 
