@@ -38,6 +38,8 @@ const MovieCard: FC<IProps> = ({movie}) => {
         navigate(`/movies/${actorsName}`)
     }
 
+    const photo = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
+
     return (
         <div className={css.container}>
             <h1> {title}</h1>
@@ -68,13 +70,12 @@ const MovieCard: FC<IProps> = ({movie}) => {
                 <h1>Actors:</h1>
                     <div className={css.actors}>
                         {actors.slice(0, 24).map(actor =>(
-                            actor.profile_path && (
                             <div onClick={()=> sortingMoviesByActors(actor.id, actor.name)}>
-                                <img src={`${poster}/${actor.profile_path}`} alt={actor.name} className={css.img}/>
+                                <img src={ actor.profile_path ? `${poster}/${actor.profile_path}`: photo} alt={actor.name} className={css.img}/>
                                <p>{actor.name}</p>
                             </div>
                             )
-                        ))}
+                        )}
                     </div>
             </section>
             </div>
