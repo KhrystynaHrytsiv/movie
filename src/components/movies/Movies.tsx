@@ -8,22 +8,15 @@ import {Pagination} from "../pagination/Pagination";
 
 
 const Movies = () => {
-    const { filter, genreId} = useAppSelector(state => state.movies);
+    const {filter, genreId, actorId} = useAppSelector(state => state.movies);
     const dispatch = useAppDispatch();
     const [query] = useSearchParams({page:'1'});
     const page = +query.get('page')
 
     useEffect(() => {
-        dispatch(movieActions.getAll({page, genreId}))
-    }, [dispatch, page, genreId]);
+        dispatch(movieActions.getAll({page, genreId, actorId}))
+    }, [dispatch, page, genreId, actorId]);
 
-    // useEffect(() => {
-    //     if (genreId) {
-    //         dispatch(movieActions.getAll({ page, genreId }));
-    //     } else {
-    //         dispatch(movieActions.getAll({page}));
-    //     }
-    // }, [dispatch, page, genreId]);
 
     return (
         <div className={css.Movies}>

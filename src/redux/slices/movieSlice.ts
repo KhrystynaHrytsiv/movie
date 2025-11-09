@@ -11,7 +11,8 @@ interface IState {
     genreId: null,
     video: IVideo[],
     images: IImage[],
-    actors: IPeople[]
+    actors: IPeople[],
+    actorId: null
 
 }
 const initialState:IState ={
@@ -22,14 +23,15 @@ const initialState:IState ={
     genreId:null,
     video: [],
     images: [],
-    actors: []
+    actors: [],
+    actorId:null
 }
 
-const getAll = createAsyncThunk<IPagination<IMovie>,{page:number, genreId?: number}>(
+const getAll = createAsyncThunk<IPagination<IMovie>,{page:number, genreId?: number, actorId?:number}>(
     'movieSlice/getAll',
-    async ({page, genreId}, {rejectWithValue} ) =>{
+    async ({page, genreId, actorId}, {rejectWithValue} ) =>{
         try{
-           const {data} = await movieService.getAll(page, genreId);
+           const {data} = await movieService.getAll(page, genreId, actorId);
            return data
         } catch (e) {
             const err = e as AxiosError
@@ -89,14 +91,15 @@ const movieSlice = createSlice({
             state.page = action.payload;
         },
         setGenre: (state, action)=>{
-           state.genreId = action.payload
+           state.genreId = action.payload;
+            state.actorId = null;
         },
-        // filtered:(state, action) =>{
-        //     const genre =action.payload
-        //     state.filter = state.movies.filter((m) => Array.isArray(m.genre_ids) && m.genre_ids.includes(genre))
-        // },
         showAll: state => {
             state.filter = state.movies;
+            state.genreId = null;
+        },
+        setActorId: (state, action) => {
+            state.actorId = action.payload;
             state.genreId = null;
         }
 

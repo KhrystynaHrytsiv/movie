@@ -24,12 +24,19 @@ const MovieCard: FC<IProps> = ({movie}) => {
         }
     }, [id, dispatch]);
 
-    const goToSorting = (genreName: string, genreId: number) => {
+    const sortingGenres = (genreName: string, genreId: number) => {
         dispatch(movieActions.setGenre(genreId));
         dispatch(movieActions.getAll({ page: 1, genreId }));
         dispatch(movieActions.setPage(1));
         navigate(`/movies/${genreName}`);
     };
+
+    const sortingMoviesByActors = (actorId:number, actorsName:string)=>{
+        dispatch(movieActions.setActorId(actorId));
+        dispatch(movieActions.getAll({page:1, actorId}));
+        dispatch(movieActions.setPage(1));
+        navigate(`/movies/${actorsName}`)
+    }
 
     return (
         <div className={css.container}>
@@ -43,7 +50,7 @@ const MovieCard: FC<IProps> = ({movie}) => {
                         <div> Vote average: {vote_average}</div>
                         <div> Popularity: {popularity}</div>
                         <p className={css.genres}>Genres: {genres.map(genre => (
-                        <span onClick={() => goToSorting(genre.name, genre.id)}> {genre.name} </span>))}</p>
+                        <span onClick={() => sortingGenres(genre.name, genre.id)}> {genre.name} </span>))}</p>
                     </div>
                 </div>
                 <div className={css.secondPart}>
@@ -58,14 +65,16 @@ const MovieCard: FC<IProps> = ({movie}) => {
                 </div>
             </main>
             <section className={css.section}>
-                <h1>Actors</h1>
+                <h1>Actors:</h1>
                     <div className={css.actors}>
-                        {actors.slice(0, 24).map(actor =>
-                            <div>
+                        {actors.slice(0, 24).map(actor =>(
+                            actor.profile_path && (
+                            <div onClick={()=> sortingMoviesByActors(actor.id, actor.name)}>
                                 <img src={`${poster}/${actor.profile_path}`} alt={actor.name} className={css.img}/>
                                <p>{actor.name}</p>
-                            </div>)}
-
+                            </div>
+                            )
+                        ))}
                     </div>
             </section>
             </div>
