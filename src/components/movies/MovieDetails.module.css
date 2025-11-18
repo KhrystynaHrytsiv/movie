@@ -1,67 +1,75 @@
-.container{
+.container {
     display: flex;
     flex-direction: column;
     padding: 0 20px;
     text-align: center;
 }
-.main{
+
+.main {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
 }
-.firstPart{
+
+.firstPart,
+.secondPart {
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 45%;
+    min-width: 300px;
 }
-.secondPart{
-    display: flex;
-    flex-direction: column;
+
+.secondPart {
     align-items: center;
     justify-content: center;
-    width: 55%;
 }
-/*.section{*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    justify-content: space-around;*/
-/*    height: 20%;*/
-/*}*/
+
+/* Responsive image */
 .moviePoster {
-    width: 450px;
+    width: 100%;
+    max-width: 450px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
-.details{
+
+.details {
     text-align: start;
-    font-size: 26px;
+    font-size: clamp(18px, 2.2vw, 26px);
     line-height: 1.5;
 }
-.genres{
-    font-size: 30px;
+
+.genres {
+    font-size: clamp(20px, 2.5vw, 30px);
     word-spacing: 10px;
 }
+
 .movieDescription {
     display: flex;
     justify-content: center;
     max-width: 750px;
-    font-size: 25px;
+    font-size: clamp(16px, 2vw, 25px);
     line-height: 1.5;
 }
-.images{
-    height: 150px;
-    width: 250px;
+
+.images {
+    height: 120px;
+    width: 200px;
     margin: 5px;
+    object-fit: cover;
 }
-.actors{
+
+.actors {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    padding: 2px;
+    gap: 10px;
 }
-.img{
-    height: 250px;
-    width: 170px;
-    margin: 5px;
+
+.img {
+    width: 150px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 6px;
 }
 

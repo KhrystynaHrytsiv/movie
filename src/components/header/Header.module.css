@@ -5,15 +5,15 @@
     height: 10vh;
     background-color: #504b5e;
     color: #b8ee16;
-    font-size: 25px;
+    font-size: clamp(16px, 2vw, 25px);
 }
 .header a{
     text-decoration: none;
     color: #b8ee16;
 }
 .photo{
-    height: 8vh;
-    width: 4vw;
+    height: auto;
+    width: clamp(35px, 6vw, 60px);
 }
 .light{
     background-color:#b8e6e3;

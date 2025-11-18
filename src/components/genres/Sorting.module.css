@@ -2,14 +2,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    text-align: center;
     align-items: center;
+    text-align: center;
+    gap: 10px;
 }
 .sort>div{
-    height: 100px;
-    width: 23%;
+    height: 15vh;
+    width: calc(23% - 10px);
     margin: 10px;
-    font-size: 35px;
-
-
+    font-size: clamp(18px, 2.5vw, 35px);
 }

@@ -11,6 +11,7 @@ const router = createBrowserRouter([
             {path: 'genres', element:<GenresPage/>},
             {path: 'search', element:<SearchPage/>}
         ]}
-]);
+]
+);
 
 export {router}

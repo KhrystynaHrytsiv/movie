@@ -1,10 +1,11 @@
-.movie{
-    height: 35%;
-    width: 23%;
+.movie {
+    width: calc(25% - 20px);
     margin: 10px;
     text-align: center;
 }
-.img{
-    height: 95%;
-    width: 95%;
+
+.img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
 }
