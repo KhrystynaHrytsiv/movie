@@ -26,7 +26,6 @@
     justify-content: center;
 }
 
-/* Responsive image */
 .moviePoster {
     width: 100%;
     max-width: 450px;
@@ -49,7 +48,7 @@
     display: flex;
     justify-content: center;
     max-width: 750px;
-    font-size: clamp(16px, 2vw, 25px);
+        font-size: clamp(16px, 2vw, 25px);
     line-height: 1.5;
 }
 
