@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/khrystyna.hrytsiv.github.io/movies/static/css/main.7e15733d.css",
-    "main.js": "/khrystyna.hrytsiv.github.io/movies/static/js/main.f297205b.js",
-    "index.html": "/khrystyna.hrytsiv.github.io/movies/index.html",
-    "main.7e15733d.css.map": "/khrystyna.hrytsiv.github.io/movies/static/css/main.7e15733d.css.map",
-    "main.f297205b.js.map": "/khrystyna.hrytsiv.github.io/movies/static/js/main.f297205b.js.map"
+    "main.css": "/movie/static/css/main.7e15733d.css",
+    "main.js": "/movie/static/js/main.f297205b.js",
+    "index.html": "/movie/index.html",
+    "main.7e15733d.css.map": "/movie/static/css/main.7e15733d.css.map",
+    "main.f297205b.js.map": "/movie/static/js/main.f297205b.js.map"
   },
   "entrypoints": [
     "static/css/main.7e15733d.css",
