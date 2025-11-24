@@ -3,21 +3,8 @@ body{
 }
 .Movies {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
 }
-.Movies > div {
-    width: calc(23% - 20px);
-    box-sizing: border-box;
-}
-@media (max-width: 450px) {
-    .Movies {
-        justify-content: center;
-    }
 
-    .Movies > div {
-        flex: 1 1 100%;
-        max-width: 100%;
-    }
-}

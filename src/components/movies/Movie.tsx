@@ -15,8 +15,8 @@ const Movie: FC<IProps> = ({movie}) => {
     return (
         <div className={css.movie}  onClick={()=> navigate(`/movies/${id}/${title}`)}>
             <img src={`${poster}/${poster_path}`} alt={title} className={css.img}/>
-            <h3> {title} </h3>
-            <Stars rating={vote_average}/>
+            <h3 className={css.title}> {title} </h3>
+            <div className={css.stars}> <Stars rating={vote_average} /></div>
         </div>
     );
 };

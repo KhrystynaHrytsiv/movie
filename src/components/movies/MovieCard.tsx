@@ -69,7 +69,7 @@ const MovieCard: FC<IProps> = ({movie}) => {
             <section className={css.section}>
                 <h1>Actors:</h1>
                     <div className={css.actors}>
-                        {actors.slice(0, 24).map(actor =>(
+                        {actors.slice(0, 18).map(actor =>(
                             <div onClick={()=> sortingMoviesByActors(actor.id, actor.name)}>
                                 <img src={ actor.profile_path ? `${poster}/${actor.profile_path}`: photo} alt={actor.name} className={css.img}/>
                                <p>{actor.name}</p>
