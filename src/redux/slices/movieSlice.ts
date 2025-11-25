@@ -5,7 +5,7 @@ import {AxiosError} from "axios";
 
 interface IState {
     movies:IMovie[],
-    errors: boolean,
+    errors: boolean | string,
     filter: IMovie[],
     page:number,
     genreId: null,
@@ -57,7 +57,8 @@ const getVideo = createAsyncThunk<IVideo[], {id:number}>(
             const {data} = await movieService.video(id);
             return data.results
         } catch (e) {
-            return rejectWithValue(e)
+            const err = e as AxiosError
+            return rejectWithValue(err.response?.data)
         }
     }
 )
@@ -115,13 +116,16 @@ const movieSlice = createSlice({
             .addCase(getActors.fulfilled, (state, action)=>{
                 state.actors = action.payload
             })
+            .addCase(getVideo.rejected, (state, action)=>{
+                state.errors = action.payload as any
+            })
             .addMatcher(isFulfilled(getAll, search), (state, action)=>{
                 state.movies = action.payload.results;
                 state.filter = action.payload.results
                 state.page = action.payload.page;
 
             })
-            .addMatcher(isRejected(getAll, search, getVideo, getImages, getActors), state => {
+            .addMatcher(isRejected(getAll, search, getImages, getActors), state => {
                 state.errors = true
             })
 
