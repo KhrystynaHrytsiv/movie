@@ -60,33 +60,45 @@
     margin-top: 10px;
     line-height: 1.7;
 }
+.gallery{
+    display: flex;
+    height: 200px;
+    width: 100%;
+    align-items: center;
+}
 .images {
-    height: 120px;
+    height: 150px;
     width: 200px;
     margin: 5px;
     object-fit: cover;
+    transition: all 1s ease-in-out;
+}
+.images:hover{
+    transform: scale(1.5);
+    margin: 0 60px;
 }
 @media (max-width: 1400px){
     .images{
         width: calc(33% - 10px);
     }
 }
-
 .actors {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 12px;
+    padding: 10px;
 }
 
 .img {
-    width: 150px;
-    height: 220px;
+    width: 100%;
+    max-width: 90px;
+    aspect-ratio: 150 / 220;
     object-fit: cover;
     border-radius: 6px;
 }
 .video {
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     aspect-ratio: 16 / 9;
     height: auto;
     min-width: 300px;

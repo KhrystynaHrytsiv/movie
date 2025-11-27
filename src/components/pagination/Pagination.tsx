@@ -27,8 +27,8 @@ const Pagination = () => {
 
     return (
         <div className={css.pagination}>
-            <button disabled={page===1} onClick={prev}>prev</button>
-            <button disabled={page>=500} onClick={next}>next</button>
+            <button disabled={page===1} onClick={prev}>Prev</button>
+            <button disabled={page>=500} onClick={next}>Next</button>
         </div>
     );
 };

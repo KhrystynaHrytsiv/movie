@@ -8,14 +8,14 @@
 .input{
     width: clamp(220px, 40vw, 450px);
     margin: 10px;
-    background-color: #1fb9b9;
+    background-color: white;
     color:#01012c;
     border: none;
     border-radius: 5px;
     font-size: clamp(14px, 1.6vw, 18px);
 }
 .button{
-    background-color: #1fb9b9;
+    background-color: white;
     color: #01012c;
     border: none;
     border-radius: 5px;

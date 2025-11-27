@@ -19,7 +19,7 @@ const initialState:IState ={
     movies:[],
     errors: null,
     filter: [],
-    page:1,
+    page: 1,
     genreId:null,
     video: [],
     images: [],

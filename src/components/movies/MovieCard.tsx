@@ -15,7 +15,7 @@ const MovieCard: FC<IProps> = ({movie}) => {
     const {id, poster_path, overview, release_date, vote_average, popularity, title, genres} = movie;
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const {video, images, actors, errors} = useAppSelector(state => state.movies);
+    const {video, images, actors} = useAppSelector(state => state.movies);
 
     useEffect(() => {
         if(id){
@@ -64,26 +64,25 @@ const MovieCard: FC<IProps> = ({movie}) => {
                                     allowFullScreen></iframe>)))
                             : (<h1>Trailer not found</h1>)
                         }
-
-
                     </div>
                     <h2>Movie description</h2>
                         <p className={css.movieDescription}> {overview}</p>
-                    <div>
-                        {images.slice(0,8).map(i=> <img src={`${poster}/${i.file_path}`} alt={''} className={css.images}/>)}
+                    <div className={css.gallery}>
+                        {images.slice(0, 8).map(i =>
+                            <img src={`${poster}/${i.file_path}`} alt={''} className={css.images}/>)}
                     </div>
                 </div>
             </main>
             <section className={css.section}>
                 <h1>Actors:</h1>
-                    <div className={css.actors}>
-                        {actors.slice(0, 18).map(actor =>(
+                <div className={css.actors}>
+                    {actors.slice(0, 18).map(actor =>(
                             <div onClick={()=> sortingMoviesByActors(actor.id, actor.name)}>
                                 <img src={ actor.profile_path ? `${poster}/${actor.profile_path}`: photo} alt={actor.name} className={css.img}/>
                                <p>{actor.name}</p>
                             </div>
-                            )
-                        )}
+                        )
+                    )}
                     </div>
             </section>
             </div>

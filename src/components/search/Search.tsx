@@ -4,6 +4,8 @@ import {movieActions} from "../../redux/slices/movieSlice";
 import {Movie} from "../movies/Movie";
 import {Pagination} from "../pagination/Pagination";
 import css from './Search.module.css'
+import cs1 from '../movies/Movies.module.css'
+
 
 const Search = () => {
     const [query, setQuery] = useState('')
@@ -20,8 +22,9 @@ const Search = () => {
         <form onSubmit={search} className={css.search}>
             <input type={'text'} value={query} placeholder={'search'} onChange={(e)=>setQuery(e.target.value)} className={css.input}/>
             <button className={css.button}>search</button>
-            <div className={css.search}>{filter.map(m=><Movie movie={m} key={m.id}/>)}</div>
-            {filter.length> 20 && <Pagination/>}
+            <div className={cs1.Movies}>{filter.map(m=><Movie movie={m} key={m.id}/>)}</div>
+            {filter.length === 0 && <div>Sorry, there are not results</div>}
+            {filter.length > 20 &&<Pagination/>}
         </form>
     );
 };
