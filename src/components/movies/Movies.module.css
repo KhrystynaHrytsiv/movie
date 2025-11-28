@@ -2,8 +2,8 @@ body{
     margin: 0;
 }
 .Movies {
-    width: 70%;
-    margin: 0 auto;
+    width: 65%;
+    margin: 20px auto;
     display: flex;
     justify-content: center;
     align-items: center;

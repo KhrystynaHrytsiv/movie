@@ -6,13 +6,18 @@ import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {movieActions} from "../../redux/slices/movieSlice";
 import {IMovie} from "../../interfaces";
 import {Stars} from "../rating/Stars";
+// import { Carousel } from 'react-responsive-carousel';
+// import "react-responsive-carousel/lib/styles/carousel.min.css";
+import {ArrowBackIos, ArrowForwardIos} from '@mui/icons-material';
+
 
 interface IProps extends PropsWithChildren{
     movie:IMovie
 }
 
+
 const MovieCard: FC<IProps> = ({movie}) => {
-    const {id, poster_path, overview, release_date, vote_average, popularity, title, genres} = movie;
+    const {id, poster_path, overview, release_date, vote_average, popularity, title, genres, runtime} = movie;
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const {video, images, actors} = useAppSelector(state => state.movies);
@@ -52,6 +57,7 @@ const MovieCard: FC<IProps> = ({movie}) => {
                         <div> Vote average: {vote_average}</div>
                         <div> Release date: {release_date}</div>
                         <div> Popularity: {popularity}</div>
+                        <div> Running time: {runtime}</div>
                         <h3 className={css.genres}>Genres: {genres.map(genre => (
                             <span onClick={() => sortingGenres(genre.name, genre.id)}> {genre.name} </span>))}</h3>
                     </div>
@@ -68,17 +74,26 @@ const MovieCard: FC<IProps> = ({movie}) => {
                     <h2>Movie description</h2>
                         <p className={css.movieDescription}> {overview}</p>
                     <div className={css.gallery}>
+                       <ArrowBackIos className={css.arrow}/>
                         {images.slice(0, 8).map(i =>
                             <img src={`${poster}/${i.file_path}`} alt={''} className={css.images}/>)}
+                        <ArrowForwardIos className={css.arrow}/>
+                        {/*<Carousel>*/}
+                        {/*    {images.slice(0, 8).map(i =>*/}
+                        {/*    <img src={`${poster}/${i.file_path}`} alt={''} className={css.images}/>)}*/}
+                        {/*</Carousel>*/}
+
                     </div>
+
                 </div>
             </main>
             <section className={css.section}>
                 <h1>Actors:</h1>
                 <div className={css.actors}>
-                    {actors.slice(0, 18).map(actor =>(
-                            <div onClick={()=> sortingMoviesByActors(actor.id, actor.name)}>
-                                <img src={ actor.profile_path ? `${poster}/${actor.profile_path}`: photo} alt={actor.name} className={css.img}/>
+                    {actors.slice(0, 18).map(actor => (
+                        <div onClick={() => sortingMoviesByActors(actor.id, actor.name)}>
+                            <img src={actor.profile_path ? `${poster}/${actor.profile_path}` : photo} alt={actor.name}
+                                 className={css.img}/>
                                <p>{actor.name}</p>
                             </div>
                         )
