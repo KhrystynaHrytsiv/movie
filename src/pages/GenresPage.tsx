@@ -1,5 +1,6 @@
 import React from 'react';
-import {Sorting} from "../components/genres/Sorting";
+import {Sorting} from "../components";
+
 
 
 const GenresPage = () => {

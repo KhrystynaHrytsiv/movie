@@ -1,6 +1,6 @@
 import React from 'react';
-import {MovieCard} from "../components/movies/MovieCard";
 import {useLoaderData} from "react-router-dom";
+import {MovieCard} from "../components";
 
 const MovieDetailsPage = () => {
     const {data} = useLoaderData();

@@ -1,0 +1,7 @@
+export * from './movies'
+export * from './genres'
+export * from './header'
+export * from './gallery'
+export * from './rating'
+export * from './pagination'
+export * from './search'

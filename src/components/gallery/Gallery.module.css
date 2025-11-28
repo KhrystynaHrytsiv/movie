@@ -1,0 +1,50 @@
+.gallery{
+    display: flex;
+    height: 200px;
+    width: 100%;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+
+    .arrowR{
+        width: 50px;
+        height: 25%;
+        background-color: rgba(80, 75, 94, 0.5);
+        position: absolute;
+        right: 10px;
+        z-index: 99;
+        cursor: pointer;
+        border-radius: 50%;
+    }
+    .arrowL{
+        width: 50px;
+        height: 25%;
+        background-color: rgba(80, 75, 94, 0.5);
+        position: absolute;
+        left: 10px;
+        z-index: 99;
+        cursor: pointer;
+        border-radius: 50%;
+    }
+
+}
+.inner {
+    display: flex;
+    gap: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+.images {
+    height: 150px;
+    width: 200px;
+    object-fit: cover;
+    transition: all 1s ease-in-out;
+}
+.images:hover{
+    transform: scale(1.5);
+    margin: 0 60px;
+}
+@media (max-width: 1400px){
+    .images{
+        width: calc(33% - 10px);
+    }
+}

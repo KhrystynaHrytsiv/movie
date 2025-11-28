@@ -1,5 +1,5 @@
 import {FC, PropsWithChildren} from "react";
-import {Movies} from "../components/movies/Movies";
+import {Movies} from "../components";
 
 interface IProps extends PropsWithChildren{}
 

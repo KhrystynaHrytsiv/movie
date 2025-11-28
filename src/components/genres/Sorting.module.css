@@ -1,14 +1,16 @@
 .sort {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    text-align: center;
+    flex-direction: column;
     gap: 10px;
+    width: 40%;
+    height: 400px;
 }
-.sort>div{
-    height: 15vh;
-    width: calc(23% - 10px);
+.sort>section{
+    /*height: 15vh;*/
+    /*width: calc(23% - 10px);*/
     margin: 10px;
-    font-size: clamp(18px, 2.5vw, 35px);
+    font-size: clamp(14px, 2.5vw, 20px);
 }

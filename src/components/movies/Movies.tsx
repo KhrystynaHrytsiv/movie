@@ -2,9 +2,8 @@ import React, {useEffect} from 'react';
 import css from './Movies.module.css'
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {movieActions} from "../../redux/slices/movieSlice";
-import {Movie} from "./Movie";
 import {useSearchParams} from "react-router-dom";
-import {Pagination} from "../pagination/Pagination";
+import {Movie, Pagination} from '..';
 
 
 const Movies = () => {

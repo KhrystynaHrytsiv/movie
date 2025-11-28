@@ -5,22 +5,18 @@ import css from './MovieDetails.module.css'
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {movieActions} from "../../redux/slices/movieSlice";
 import {IMovie} from "../../interfaces";
-import {Stars} from "../rating/Stars";
-// import { Carousel } from 'react-responsive-carousel';
-// import "react-responsive-carousel/lib/styles/carousel.min.css";
-import {ArrowBackIos, ArrowForwardIos} from '@mui/icons-material';
+import {Gallery, Stars} from "..";
 
 
 interface IProps extends PropsWithChildren{
     movie:IMovie
 }
 
-
 const MovieCard: FC<IProps> = ({movie}) => {
     const {id, poster_path, overview, release_date, vote_average, popularity, title, genres, runtime} = movie;
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const {video, images, actors} = useAppSelector(state => state.movies);
+    const {video, actors} = useAppSelector(state => state.movies);
 
     useEffect(() => {
         if(id){
@@ -66,26 +62,13 @@ const MovieCard: FC<IProps> = ({movie}) => {
                     <div className={css.video}>
                         {video && video.filter(v => v.site === 'YouTube' && v.type === 'Trailer').length > 0 ? (
                             video.filter(v => v.site === 'YouTube' && v.type === 'Trailer').slice(0, 1).map(v => (
-                            <iframe key={v.id} src={`https://www.youtube.com/embed/${v.key}`} title={v.name}
-                                    allowFullScreen></iframe>)))
-                            : (<h1>Trailer not found</h1>)
-                        }
+                                <iframe key={v.id} src={`https://www.youtube.com/embed/${v.key}`} title={v.name} allowFullScreen></iframe>)))
+                        : (<h1>Trailer not found</h1>)}
                     </div>
                     <h2>Movie description</h2>
-                        <p className={css.movieDescription}> {overview}</p>
-                    <div className={css.gallery}>
-                       <ArrowBackIos className={css.arrow}/>
-                        {images.slice(0, 8).map(i =>
-                            <img src={`${poster}/${i.file_path}`} alt={''} className={css.images}/>)}
-                        <ArrowForwardIos className={css.arrow}/>
-                        {/*<Carousel>*/}
-                        {/*    {images.slice(0, 8).map(i =>*/}
-                        {/*    <img src={`${poster}/${i.file_path}`} alt={''} className={css.images}/>)}*/}
-                        {/*</Carousel>*/}
-
+                    <p className={css.movieDescription}> {overview}</p>
+                    <Gallery/>
                     </div>
-
-                </div>
             </main>
             <section className={css.section}>
                 <h1>Actors:</h1>
@@ -94,8 +77,8 @@ const MovieCard: FC<IProps> = ({movie}) => {
                         <div onClick={() => sortingMoviesByActors(actor.id, actor.name)}>
                             <img src={actor.profile_path ? `${poster}/${actor.profile_path}` : photo} alt={actor.name}
                                  className={css.img}/>
-                               <p>{actor.name}</p>
-                            </div>
+                            <p>{actor.name}</p>
+                        </div>
                         )
                     )}
                     </div>

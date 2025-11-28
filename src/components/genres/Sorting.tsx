@@ -26,13 +26,13 @@ const Sorting = () => {
         dispatch(genreActions.getAll())
     }, [dispatch]);
     return (
-        <div  className={css.sort}>
-            <div onClick={() => filterMovie()}> All </div>
+        <form  className={css.form}>
+            <section onClick={() => filterMovie()}> All </section>
             {genres.map(genre => (
-                <div onClick={() => filterMovie(genre.name, genre.id)}> {genre.name} </div>
+                <section onClick={() => filterMovie(genre.name, genre.id)}> {genre.name} </section>
             ))}
 
-        </div>
+        </form>
     );
 };
 
