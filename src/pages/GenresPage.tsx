@@ -3,6 +3,7 @@ import {Sorting} from "../components";
 
 
 
+
 const GenresPage = () => {
     return (
         <div>

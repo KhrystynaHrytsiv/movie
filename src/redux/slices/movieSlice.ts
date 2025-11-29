@@ -12,7 +12,8 @@ interface IState {
     video: IVideo[],
     images: IImage[],
     actors: IPeople[],
-    actorId: null
+    actorId: null,
+    rating: null
 
 }
 const initialState:IState ={
@@ -24,14 +25,15 @@ const initialState:IState ={
     video: [],
     images: [],
     actors: [],
-    actorId:null
+    actorId:null,
+    rating: null
 }
 
-const getAll = createAsyncThunk<IPagination<IMovie>,{page:number, genreId?: number, actorId?:number}>(
+const getAll = createAsyncThunk<IPagination<IMovie>,{page:number, genreId?: number, actorId?:number, rating?: number}>(
     'movieSlice/getAll',
-    async ({page, genreId, actorId}, {rejectWithValue} ) =>{
+    async ({page, genreId, actorId, rating}, {rejectWithValue} ) =>{
         try{
-           const {data} = await movieService.getAll(page, genreId, actorId);
+           const {data} = await movieService.getAll(page, genreId, actorId, rating);
            return data
         } catch (e) {
             const err = e as AxiosError
@@ -102,8 +104,12 @@ const movieSlice = createSlice({
         setActorId: (state, action) => {
             state.actorId = action.payload;
             state.genreId = null;
-        }
-
+        },
+        setRatingFilter: (state, action) => {
+            const rating = action.payload;
+            state.rating = rating;
+            state.filter = state.movies.filter(movie => movie.vote_average >= rating);
+        },
     },
     extraReducers: builder =>
         builder

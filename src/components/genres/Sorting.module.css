@@ -1,16 +1,22 @@
-.sort {
+.container {
+    width: 60%;
+    height: 50px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    flex-direction: column;
-    gap: 10px;
-    width: 40%;
-    height: 400px;
+    flex-direction: row;
+    margin: 30px auto;
+    background-color: rgba(0, 0, 0, 0.58);
+    border-radius: 10px;
 }
-.sort>section{
-    /*height: 15vh;*/
-    /*width: calc(23% - 10px);*/
-    margin: 10px;
-    font-size: clamp(14px, 2.5vw, 20px);
+.genres, .years, .rating{
+    text-align: center;
+    width: 25%;
+    font-size: clamp(12px, 2.2em, 18px);
+    /*background-color: #504b5e;*/
+    border-radius: 10px;
+}
+option{
+    background-color: rgba(0, 0, 0, 0.58);
+
 }
