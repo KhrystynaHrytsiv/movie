@@ -8,7 +8,6 @@ import {useNavigate} from "react-router-dom";
 const Sorting = () => {
     const dispatch = useAppDispatch();
     const {genres} = useAppSelector(state => state.genres);
-    const {movies} = useAppSelector(state => state.movies);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,6 +27,7 @@ const Sorting = () => {
         }
     }
 
+
     const filterRating =(rating: number) =>{
         if(rating) {
             dispatch(movieActions.setRatingFilter(rating))
@@ -40,33 +40,44 @@ const Sorting = () => {
         }
     }
 
-
     return (
         <div className={css.container}>
             <select className={css.genres}>
-                <option>Genres</option>
                 <option onClick={() => filterMovie()}> All </option>
             {genres.map(genre => (
                 <option onClick={() => filterMovie(genre.name, genre.id)}> {genre.name} </option>
             ))}
             </select>
+            {/*<select*/}
+            {/*    className={css.genres} onChange={(e) => {*/}
+            {/*    const value = e.target.value;*/}
+            {/*    if (value === "all") return filterMovie();*/}
+            {/*    const genre = genres.find(g => g.id.toString() === value);*/}
+            {/*    filterMovie(genre.name, genre.id)*/}
+            {/*}}>*/}
+            {/*    <option value="all">Genres: All</option>*/}
+            {/*    {genres.map(genre => (*/}
+            {/*        <option key={genre.id} value={genre.id}>{genre.name}</option>*/}
+            {/*    ))}*/}
+            {/*</select>*/}
             <select className={css.years}>
                 <option>Years</option>
 
             </select>
             <select className={css.rating}>
                 <option>Rating</option>
-                <option onClick={()=> filterRating(1)}>1</option>
-                <option onClick={()=> filterRating(2)}>2</option>
-                <option onClick={()=> filterRating(3)}>3</option>
-                <option onClick={()=> filterRating(4)}>4</option>
-                <option onClick={()=> filterRating(5)}>5</option>
-                <option onClick={()=> filterRating(6)}>6</option>
-                <option onClick={()=> filterRating(7)}>7</option>
-                <option onClick={()=> filterRating(8)}>8</option>
-                <option onClick={()=> filterRating(9)}>9</option>
-                <option onClick={()=> filterRating(10)}>10</option>
+                <option onChange={()=> filterRating(1)}>1</option>
+                <option onChange={()=> filterRating(2)}>2</option>
+                <option onChange={()=> filterRating(3)}>3</option>
+                <option onChange={()=> filterRating(4)}>4</option>
+                <option onChange={()=> filterRating(5)}>5</option>
+                <option onChange={()=> filterRating(6)}>6</option>
+                <option onChange={()=> filterRating(7)}>7</option>
+                <option onChange={()=> filterRating(8)}>8</option>
+                <option onChange={()=> filterRating(9)}>9</option>
+                <option onChange={()=> filterRating(10)}>10</option>
             </select>
+            <button>reset</button>
         </div>
     );
 };
