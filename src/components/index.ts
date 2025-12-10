@@ -1,5 +1,5 @@
 export * from './movies'
-export * from './genres'
+// export * from './genres'
 export * from './header'
 export * from './gallery'
 export * from './rating'

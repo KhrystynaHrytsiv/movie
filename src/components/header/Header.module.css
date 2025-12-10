@@ -6,7 +6,9 @@
     background-color: #504b5e;
     color: #b8ee16;
     font-size: clamp(16px, 2vw, 25px);
+    cursor: pointer;
 }
+
 .header a{
     text-decoration: none;
     color: #b8ee16;
@@ -14,6 +16,7 @@
 .photo{
     height: auto;
     width: clamp(35px, 6vw, 60px);
+
 }
 .light{
     background-color:#b8e6e3;
@@ -22,4 +25,8 @@
 .dark{
     background-color: #443f4f;
     color: #b8ee16;
+}
+.icon{
+    height: 4.5rem;
+    width: 5rem;
 }

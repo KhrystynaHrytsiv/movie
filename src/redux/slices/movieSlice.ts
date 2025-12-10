@@ -13,7 +13,8 @@ interface IState {
     images: IImage[],
     actors: IPeople[],
     actorId: null,
-    rating: null
+    rating: null,
+    backImages: string
 
 }
 const initialState:IState ={
@@ -26,18 +27,30 @@ const initialState:IState ={
     images: [],
     actors: [],
     actorId:null,
-    rating: null
+    rating: null,
+    backImages: ''
 }
 
-const getAll = createAsyncThunk<IPagination<IMovie>,{page:number, genreId?: number, actorId?:number, rating?: number}>(
+const getAll = createAsyncThunk<IPagination<IMovie>,{type:string, page:number, genreId?: number, actorId?:number, rating?: number}>(
     'movieSlice/getAll',
-    async ({page, genreId, actorId, rating}, {rejectWithValue} ) =>{
+    async ({type, page, genreId, actorId, rating}, {rejectWithValue} ) =>{
         try{
-           const {data} = await movieService.getAll(page, genreId, actorId, rating);
+           const {data} = await movieService.getAll(type, page, genreId, actorId, rating);
            return data
         } catch (e) {
             const err = e as AxiosError
            return rejectWithValue(err.response.data)
+        }
+    }
+)
+const getMovieByType = createAsyncThunk<IMovie[],{type:string}>(
+    'movieSlice/getByType',
+    async ({type}, {rejectWithValue})=>{
+        try {
+        const {data} =await movieService.getMovieByType(type);
+        return data.results
+        } catch (e) {
+           return rejectWithValue(e)
         }
     }
 )
@@ -110,6 +123,9 @@ const movieSlice = createSlice({
             state.rating = rating;
             state.filter = state.movies.filter(movie => movie.vote_average >= rating);
         },
+        setBackImage:(state, action)=>{
+            state.backImages = action.payload
+        }
     },
     extraReducers: builder =>
         builder
@@ -125,6 +141,9 @@ const movieSlice = createSlice({
             .addCase(getVideo.rejected, (state, action)=>{
                 state.errors = action.payload as any
             })
+            .addCase(getMovieByType.fulfilled, (state, action)=>{
+                state.movies = action.payload
+            })
             .addMatcher(isFulfilled(getAll, search), (state, action)=>{
                 state.movies = action.payload.results;
                 state.filter = action.payload.results
@@ -138,7 +157,7 @@ const movieSlice = createSlice({
 
 });
 const {reducer:movieReducer, actions} = movieSlice;
-const movieActions = {...actions, getAll, search, getVideo, getImages, getActors}
+const movieActions = {...actions, getAll, search, getVideo, getImages, getActors, getMovieByType}
 
 export {movieReducer, movieActions}
 

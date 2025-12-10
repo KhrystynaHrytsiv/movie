@@ -1,6 +1,8 @@
 const baseURL = 'https://api.themoviedb.org/3'
 const movies = '/movie';
-const discover = '/discover/movie';
+const configuration = '/configuration'
+const discover = (type:string):string => `/discover/${type};`
+const movieList = (type:string):string => `${movies}/${type}`
 const genres = '/genre/movie/list';
 const search = '/search/movie';
 const video=(id: number):string => `/movie/${id}/videos`
@@ -10,14 +12,16 @@ const people =(id: number): string=> `/movie/${id}/credits`
 const poster = `https://image.tmdb.org/t/p/w500`
 
 const urls ={
+    discover: (type: string): string => discover(type),
     movies:{
-        base: discover,
         byId: (id: number): string => `${movies}/${id}`
     },
+    movieList,
     genres,
     search,
     video,
     images,
-   people
+   people,
+    configuration
 }
  export {baseURL, urls, poster}

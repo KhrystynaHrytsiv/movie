@@ -18,27 +18,27 @@ const MovieCard: FC<IProps> = ({movie}) => {
     const navigate = useNavigate();
     const {video, actors} = useAppSelector(state => state.movies);
 
-    // useEffect(() => {
-    //     if(id){
-    //         dispatch(movieActions.getVideo({id}));
-    //         dispatch(movieActions.getImages({id}));
-    //         dispatch(movieActions.getActors({id}))
-    //     }
-    // }, [id, dispatch]);
+    useEffect(() => {
+        if(id){
+            dispatch(movieActions.getVideo({id}));
+            dispatch(movieActions.getImages({id}));
+            dispatch(movieActions.getActors({id}))
+        }
+    }, [id, dispatch]);
 
     const sortingGenres = (genreName: string, genreId: number) => {
         dispatch(movieActions.setGenre(genreId));
-        dispatch(movieActions.getAll({ page: 1, genreId }));
+        dispatch(movieActions.getAll({type:'', page: 1, genreId }));
         dispatch(movieActions.setPage(1));
         navigate(`/movies/${genreName}`);
     };
 
-    // const sortingMoviesByActors = (actorId:number, actorsName:string)=>{
-    //     dispatch(movieActions.setActorId(actorId));
-    //     dispatch(movieActions.getAll({page:1, actorId}));
-    //     dispatch(movieActions.setPage(1));
-    //     navigate(`/movies/${actorsName}`)
-    // }
+    const sortingMoviesByActors = (actorId:number, actorsName:string)=>{
+        dispatch(movieActions.setActorId(actorId));
+        dispatch(movieActions.getAll({type: '', page:1, actorId}));
+        dispatch(movieActions.setPage(1));
+        navigate(`/movies/${actorsName}`)
+    }
 
     const photo = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
 
@@ -70,19 +70,19 @@ const MovieCard: FC<IProps> = ({movie}) => {
                     <Gallery/>
                     </div>
             </main>
-            {/*<section className={css.section}>*/}
-            {/*    <h1>Actors:</h1>*/}
-            {/*    <div className={css.actors}>*/}
-            {/*        {actors.slice(0, 18).map(actor => (*/}
-            {/*            <div onClick={() => sortingMoviesByActors(actor.id, actor.name)}>*/}
-            {/*                <img src={actor.profile_path ? `${poster}/${actor.profile_path}` : photo} alt={actor.name}*/}
-            {/*                     className={css.img}/>*/}
-            {/*                <p>{actor.name}</p>*/}
-            {/*            </div>*/}
-            {/*            )*/}
-            {/*        )}*/}
-            {/*        </div>*/}
-            {/*</section>*/}
+            <section className={css.section}>
+                <h1>Actors:</h1>
+                <div className={css.actors}>
+                    {actors.slice(0, 18).map(actor => (
+                        <div onClick={() => sortingMoviesByActors(actor.id, actor.name)}>
+                            <img src={actor.profile_path ? `${poster}/${actor.profile_path}` : photo} alt={actor.name}
+                                 className={css.img}/>
+                            <p>{actor.name}</p>
+                        </div>
+                        )
+                    )}
+                    </div>
+            </section>
             </div>
     );
 };

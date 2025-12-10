@@ -13,7 +13,7 @@ const Movies = () => {
     const page = +query.get('page')
 
     useEffect(() => {
-        dispatch(movieActions.getAll({page, genreId, actorId}))
+        dispatch(movieActions.getAll({type: 'movie', page, genreId, actorId}))
     }, [dispatch, page, genreId, actorId]);
 
 

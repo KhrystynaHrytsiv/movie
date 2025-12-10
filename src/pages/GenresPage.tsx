@@ -1,5 +1,5 @@
 import React from 'react';
-import {Sorting} from "../components";
+// import {Sorting} from "../components";
 
 
 
@@ -7,7 +7,7 @@ import {Sorting} from "../components";
 const GenresPage = () => {
     return (
         <div>
-            <Sorting/>
+            {/*<Sorting/>*/}
         </div>
     );
 };
