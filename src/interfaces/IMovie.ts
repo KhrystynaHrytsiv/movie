@@ -4,6 +4,7 @@ import {IVideo} from "./IVideo";
 export interface IMovie {
     id: number,
     original_title: string,
+    name: string,
     genre_ids:number[]
     genres: IGenre[],
     overview: string,

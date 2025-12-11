@@ -146,7 +146,7 @@ const movieSlice = createSlice({
             })
             .addMatcher(isFulfilled(getAll, search), (state, action)=>{
                 state.movies = action.payload.results;
-                state.filter = action.payload.results
+                state.filter = action.payload.results;
                 state.page = action.payload.page;
 
             })

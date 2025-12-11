@@ -26,12 +26,14 @@ const MovieCard: FC<IProps> = ({movie}) => {
         }
     }, [id, dispatch]);
 
+
     const sortingGenres = (genreName: string, genreId: number) => {
         dispatch(movieActions.setGenre(genreId));
-        dispatch(movieActions.getAll({type:'', page: 1, genreId }));
+        dispatch(movieActions.getAll({type: 'tv', page: 1, genreId }));
         dispatch(movieActions.setPage(1));
         navigate(`/movies/${genreName}`);
     };
+
 
     const sortingMoviesByActors = (actorId:number, actorsName:string)=>{
         dispatch(movieActions.setActorId(actorId));
@@ -65,7 +67,7 @@ const MovieCard: FC<IProps> = ({movie}) => {
                                 <iframe key={v.id} src={`https://www.youtube.com/embed/${v.key}`} title={v.name} allowFullScreen></iframe>)))
                         : (<h1>Trailer not found</h1>)}
                     </div>
-                    <h2>Movie description</h2>
+                    <h2>Description</h2>
                     <p className={css.movieDescription}> {overview}</p>
                     <Gallery/>
                     </div>

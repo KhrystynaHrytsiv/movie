@@ -16,7 +16,6 @@ const Movies = () => {
         dispatch(movieActions.getAll({type: 'movie', page, genreId, actorId}))
     }, [dispatch, page, genreId, actorId]);
 
-
     return (
         <div className={css.Movies}>
             {filter.map(m => <Movie key={m.id} movie={m} />)}
