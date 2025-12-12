@@ -3,13 +3,15 @@ import {apiService, baseURL} from "../../services";
 import {movieActions} from "../../redux/slices/movieSlice";
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import css from './BackImage.module.css'
-import { FaAngleRight } from "react-icons/fa6";
+import {FaAngleRight} from "react-icons/fa6";
 import {FaAngleLeft} from "react-icons/fa";
+import {useNavigate} from "react-router-dom";
 
 const BackgroundImage = () => {
     const dispatch = useAppDispatch();
     const {movies, backImages} = useAppSelector(state => state.movies);
     const [currentImage, setCurrentImage] = useState(0)
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(movieActions.getMovieByType({type: 'popular'}))
@@ -72,7 +74,7 @@ const BackgroundImage = () => {
                             <span>|</span>
                             <p>View : {Number(movie.popularity).toFixed(0)}</p>
                         </div>
-                        <button className={css.playButton}>Play Now</button>
+                        <button className={css.playButton} onClick={()=> navigate(`/player/${movie.id}`)}>Play Now</button>
                     </div>
                 </div>)}
             </div>
