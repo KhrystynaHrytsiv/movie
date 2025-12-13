@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {movieActions} from "../../redux/slices/movieSlice";
 import css from './Search.module.css'
 import cs1 from '../movies/Movies.module.css'
-import {Movie, Pagination} from '..';
+import {MovieCard, Pagination} from '..';
 
 
 const Search = () => {
@@ -21,7 +21,7 @@ const Search = () => {
         <form onSubmit={search} className={css.search}>
             <input type={'text'} value={query} placeholder={'search'} onChange={(e)=>setQuery(e.target.value)} className={css.input}/>
             <button className={css.button}>search</button>
-            <div className={cs1.Movies}>{filter.map(m=><Movie movie={m} key={m.id}/>)}</div>
+            <div className={cs1.Movies}>{filter.map(m=><MovieCard movie={m} key={m.id}/>)}</div>
             {/*{filter.length === 0 && <div>Sorry, there are not results</div>}*/}
             {filter.length > 20 &&<Pagination/>}
         </form>

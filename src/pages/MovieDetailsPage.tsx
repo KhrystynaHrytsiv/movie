@@ -1,12 +1,12 @@
 import React from 'react';
 import {useLoaderData} from "react-router-dom";
-import {MovieCard} from "../components";
+import {MovieDetails} from "../components";
 
 const MovieDetailsPage = () => {
     const {data} = useLoaderData();
     return (
         <div>
-            <MovieCard movie={data}/>
+            <MovieDetails movie={data}/>
         </div>
     );
 };

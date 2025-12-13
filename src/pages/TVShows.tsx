@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import css from '../components/movies/Movies.module.css'
 import {useSearchParams} from "react-router-dom";
-import {Pagination, Movie} from "../components";
+import {Pagination, MovieCard} from "../components";
 import {movieActions} from "../redux/slices/movieSlice";
 import {useAppDispatch, useAppSelector} from "../hook/reduxHooks";
 
@@ -18,7 +18,7 @@ const TVShows = () => {
 
     return (
         <div className={css.Movies}>
-            {filter.map(m => <Movie key={m.id} movie={m} />)}
+            {filter.map(m => <MovieCard key={m.id} movie={m} />)}
             <Pagination/>
         </div>
     );

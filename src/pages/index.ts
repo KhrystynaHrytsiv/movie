@@ -1,4 +1,4 @@
-export * from './MoviePage'
+export * from './Movies'
 export * from './MainPage'
 export * from './GenresPage'
 export * from './MovieDetailsPage'
