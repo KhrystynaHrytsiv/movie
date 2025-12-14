@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {IGenre} from "../../interfaces/IGenre";
 import {genreService} from "../../services/genreService";
+import {IGenre} from "../../interfaces";
 
 interface IState{
     genres:IGenre[],

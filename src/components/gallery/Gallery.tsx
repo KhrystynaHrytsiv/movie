@@ -7,7 +7,7 @@ import css from './Gallery.module.css'
 const Gallery = () => {
     const [index, setIndex] = useState(0)
     const {images} = useAppSelector(state => state.movies);
-    const maxIndex = images.slice(0, 8).length - 1
+    const maxIndex = images.slice(0, 8).length - 2
 
     const handleClick = (direction: "left" | "right") => {
         if (direction === "left") {
@@ -20,9 +20,11 @@ const Gallery = () => {
     return (
         <div className ={css.gallery}>
             {index > 0 && (<ArrowBackIosNew className={css.arrowL} onClick={() => handleClick('left')}/>)}
-            <div className={css.inner} style={{transform: `translateX(-${index * 180}px)`}}>
+            <div className={css.inner} >
                 {images.slice(0, 8).map(i =>
-                    <img src={`${poster}/${i.file_path}`} alt={''} className={css.images}/>)}
+                    <div className={css.imageContainer} style={{transform: `translateX(-${index * 100}%)`}}>
+                    <img src={`${poster}/${i.file_path}`} alt={''} className={css.images}/>
+                    </div>)}
             </div>
             {index < maxIndex && (<ArrowForwardIos className={css.arrowR} onClick={() => handleClick('right')}/>)}
         </div>

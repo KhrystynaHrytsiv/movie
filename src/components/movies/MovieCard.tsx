@@ -1,6 +1,5 @@
 import {FC, PropsWithChildren, useState} from "react";
 import {poster} from "../../services";
-// import css from './MovieCard.module.css'
 import {useNavigate} from "react-router-dom";
 import {IMovie} from "../../interfaces";
 import { IoIosMore } from "react-icons/io";
@@ -11,7 +10,7 @@ interface IProps extends PropsWithChildren{
 }
 
 const MovieCard: FC<IProps> = ({movie}) => {
-    const {id, title, poster_path, vote_average, name} = movie;
+    const {id, title, poster_path, vote_average, name, release_date} = movie;
     const [isHovered, setIsHovered] = useState(false);
     const navigate = useNavigate();
     const rating = Number(vote_average.toFixed(1))
@@ -30,17 +29,15 @@ const MovieCard: FC<IProps> = ({movie}) => {
                     </div>
                     <div className={css.infoContainer}>
                         <h3 className={css.title}> {title ? title : name} </h3>
-                        <div>Rating: {rating}+</div>
                         <div className={css.info}>
+                        <div> Release year: {release_date && new Date(release_date).getFullYear()}</div>
+                            <span>|</span>
+                        <div>Rating: {rating}+</div>
                         <IoIosMore title='More Info'/>
                         </div>
-                            {/*<div className={css.genres}>*/}
-                            {/*    <ul className='flex'>{genres.map(genre => <li>{genre.name}</li>)}</ul>*/}
-                            {/*</div>*/}
                     </div>
                 </div>
             )}
-            {/*<div className={css.rating}>{rating}</div>*/}
         </div>
     );
 };
