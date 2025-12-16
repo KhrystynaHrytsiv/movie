@@ -16,7 +16,7 @@ const MovieCard: FC<IProps> = ({movie}) => {
     const rating = Number(vote_average.toFixed(1))
 
     const navigation = ()=>{
-        const type = title ? 'movies' : 'tv';
+        const type = title ? 'movie' : 'tv';
         navigate(`/${type}/${id}/${title || name}`)
     }
     return (

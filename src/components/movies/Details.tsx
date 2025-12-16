@@ -1,0 +1,111 @@
+import React, {FC, PropsWithChildren, useEffect} from "react";
+import {MediaType, poster} from "../../services";
+import {IMovie} from "../../interfaces";
+import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
+import {useNavigate, useParams} from "react-router-dom";
+import {movieActions} from "../../redux/slices/movieSlice";
+import {Gallery} from "../gallery";
+import css from './Details.module.css'
+
+
+interface IProps extends PropsWithChildren{
+    movie:IMovie
+}
+
+const Details: FC<IProps> = ({movie}) => {
+    const {id, poster_path, backdrop_path, overview, release_date, vote_average, popularity, title, genres, runtime, name, tagline, vote_count, status} = movie;
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const {video, actors} = useAppSelector(state => state.movies);
+    const { type } = useParams<{ type: MediaType }>();
+
+    useEffect(() => {
+        if(id){
+            dispatch(movieActions.getVideo({id, type}));
+            dispatch(movieActions.getImages({id, type}));
+            dispatch(movieActions.getActors({id, type}))
+        }
+    }, [id, type, dispatch]);
+
+
+    const sortingGenres = (genreName: string, genreId: number) => {
+        if (!type) return
+        dispatch(movieActions.setGenre(genreId));
+        dispatch(movieActions.getAll({type, page: 1, genreId }));
+        dispatch(movieActions.setPage(1));
+        navigate(`/${type}/${genreName}`);
+    };
+
+
+    const sortingMoviesByActors = (actorId:number, actorsName:string)=>{
+        if (!type) return
+        dispatch(movieActions.setActorId(actorId));
+        dispatch(movieActions.getAll({type, page:1, actorId}));
+        dispatch(movieActions.setPage(1));
+        navigate(`/${type}/${actorsName}`)
+    }
+
+    const photo = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
+
+    return (
+        <div className={css.main}>
+            <div className={css.background}>
+                <div className={css.imageContainer}>
+                    <img src={`${poster}/${backdrop_path}`} alt={title} className={css.movieBackground}/>
+                </div>
+                <div className={css.black}></div>
+            </div>
+            <div className={css.posterContainer}>
+                <div className={css.moviePoster}>
+                    <img src={`${poster}/${poster_path}`} alt={title} className={css.poster}/>
+                    <button className={css.play}>Play Now</button>
+                </div>
+                <div className={css.details}>
+                    <h2 className={css.title}>{title || name}</h2>
+                    <p>{tagline}</p>
+                    <hr/>
+                    <div className={css.numbers}>
+                        <p>Rating: {Number(vote_average).toFixed(1)}+</p>
+                        <span>|</span>
+                        <p> View : {vote_count}</p>
+                        {runtime && <span>|</span>}
+                        {runtime && <p>Duration: {runtime}</p>}
+                    </div>
+                    <hr/>
+                    <div>
+                        <h3 className={css.overview}>Overview</h3>
+                        <p>{overview}</p>
+                        <hr/>
+                        <h4 className={css.genres}>
+                            Genres: {genres.map(genre => (
+                            <p onClick={() => sortingGenres(genre.name, genre.id)}> {genre.name}  </p>))}</h4>
+                        <hr/>
+                        <div className={css.status}>
+                            <p>Status : {status}</p>
+                            {release_date && <span>|</span>}
+                            {release_date && <p>Release Date : {release_date}</p>}
+                            <span>|</span>
+                            <p>Popularity : {popularity}</p>
+                        </div>
+                        <hr/>
+                    </div>
+                    <Gallery/>
+                    <hr/>
+                    <h2 className={css.hActors}>Actors :</h2>
+                    <div className={css.blockCast}>
+                        {actors.slice(0, 18).map(actor => (
+                            <div onClick={() => sortingMoviesByActors(actor.id, actor.name)}>
+                                <div><img src={actor.profile_path ? `${poster}/${actor.profile_path}` : photo}
+                                          alt={actor.name} className={css.actors}/></div>
+                                <p className={css.actorsName}>{actor.name}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    );
+};
+
+export {Details};

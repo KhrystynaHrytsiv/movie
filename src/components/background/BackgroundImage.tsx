@@ -14,7 +14,7 @@ const BackgroundImage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(movieActions.getMovieByType({type: 'popular'}))
+        dispatch(movieActions.getMovieByType({type: 'movie', list: 'popular'}))
         fetchBackDropData()
     }, [dispatch]);
 

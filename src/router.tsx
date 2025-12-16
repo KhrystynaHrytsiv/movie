@@ -1,18 +1,18 @@
 import {createHashRouter} from "react-router-dom";
-import {GenresPage, Home, MainPage, MovieDetailsPage, Movies, Player, SearchPage, TVShows} from "./pages";
+import {Home, MainPage, MovieDetailsPage, Movies, Player, SearchPage, TVShows} from "./pages";
 import {movieService} from "./services";
+
 
 const router = createHashRouter([
     {path: '', element:<MainPage/>  , children:[
             {index:true, element:<Home/>},
             {path: 'movies', element:<Movies/>},
-            {path: 'movies/:genreName', element:<Movies/>},
-            {path: 'movies/:id/:title', element:<MovieDetailsPage/>, loader: ({params:{id}}) => movieService.getById(+id)},
+            {path: 'movie/:genreName', element:<Movies/>},
+            {path: ':type/:id/:name', element:<MovieDetailsPage/>, loader: ({params:{id, type}}) => movieService.getById(+id, type as 'movie' | 'tv')},
             {path: 'tv', element:<TVShows/>},
-            {path: 'tv/:id/:name', element:<MovieDetailsPage/>, loader: ({params:{id}}) => movieService.getTVById(+id)},
-            {path: 'genres', element:<GenresPage/>},
+            {path: 'tv/:genreName', element:<TVShows/>},
             {path: 'search', element:<SearchPage/>},
-            {path: 'player/:id', element:<Player/>}
+            {path: ':type/:id/player', element:<Player/>}
         ]}
 ]
 );

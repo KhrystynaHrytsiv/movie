@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice, isFulfilled, isRejected} from "@reduxjs/toolkit";
 import {IImage, IMovie, IPagination, IPeople, IVideo} from "../../interfaces";
-import {movieService} from "../../services";
+import {MediaType, movieService, MediaList} from "../../services";
 import {AxiosError} from "axios";
 
 interface IState {
@@ -31,7 +31,7 @@ const initialState:IState ={
     backImages: ''
 }
 
-const getAll = createAsyncThunk<IPagination<IMovie>,{type:string, page:number, genreId?: number, actorId?:number, rating?: number}>(
+const getAll = createAsyncThunk<IPagination<IMovie>,{type:MediaType, page:number, genreId?: number, actorId?:number, rating?: number}>(
     'movieSlice/getAll',
     async ({type, page, genreId, actorId, rating}, {rejectWithValue} ) =>{
         try{
@@ -43,11 +43,11 @@ const getAll = createAsyncThunk<IPagination<IMovie>,{type:string, page:number, g
         }
     }
 )
-const getMovieByType = createAsyncThunk<IMovie[],{type:string}>(
+const getMovieByType = createAsyncThunk<IMovie[],{type:MediaType, list:MediaList}>(
     'movieSlice/getByType',
-    async ({type}, {rejectWithValue})=>{
+    async ({type, list}, {rejectWithValue})=>{
         try {
-        const {data} =await movieService.getMovieByType(type);
+        const {data} =await movieService.getMovieByType(type, list);
         return data.results
         } catch (e) {
            return rejectWithValue(e)
@@ -65,11 +65,11 @@ const search = createAsyncThunk<IPagination<IMovie>,{query:string, page?: number
        }
     }
 )
-const getVideo = createAsyncThunk<IVideo[], {id:number}>(
+const getVideo = createAsyncThunk<IVideo[], {id:number, type:MediaType}>(
     'movieSlice/getVideo',
-    async ({id}, {rejectWithValue})=>{
+    async ({id, type}, {rejectWithValue})=>{
         try {
-            const {data} = await movieService.video(id);
+            const {data} = await movieService.video(id, type);
             return data.results
         } catch (e) {
             const err = e as AxiosError
@@ -77,22 +77,22 @@ const getVideo = createAsyncThunk<IVideo[], {id:number}>(
         }
     }
 )
-const getImages = createAsyncThunk<IImage[], {id:number}>(
+const getImages = createAsyncThunk<IImage[], {id:number, type:MediaType}>(
     'movieSlice/getImages',
-    async ({id}, {rejectWithValue})=>{
+    async ({id, type}, {rejectWithValue})=>{
         try {
-            const {data} = await movieService.images(id);
+            const {data} = await movieService.images(id, type);
             return data.backdrops
         } catch (e) {
             return rejectWithValue(e)
         }
     }
 )
-const getActors = createAsyncThunk<IPeople[], {id:number}>(
+const getActors = createAsyncThunk<IPeople[], {id:number, type:MediaType}>(
     'movieSlice/getActors',
-    async ({id}, {rejectWithValue}) => {
+    async ({id, type}, {rejectWithValue}) => {
         try {
-           const {data} = await movieService.people(id);
+           const {data} = await movieService.people(id, type);
            return data.cast
         } catch (e) {
             return rejectWithValue(e)

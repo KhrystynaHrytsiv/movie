@@ -1,6 +1,5 @@
 export * from './Movies'
 export * from './MainPage'
-export * from './GenresPage'
 export * from './MovieDetailsPage'
 export * from './SearchPage'
 export * from './TVShows'

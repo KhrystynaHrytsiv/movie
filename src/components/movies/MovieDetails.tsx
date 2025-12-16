@@ -1,6 +1,6 @@
 import React, {FC, PropsWithChildren, useEffect} from "react";
-import {poster} from "../../services";
-import {useNavigate} from "react-router-dom";
+import {MediaType, poster} from "../../services";
+import {useNavigate, useParams} from "react-router-dom";
 import css from './MovieDetails.module.css'
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {movieActions} from "../../redux/slices/movieSlice";
@@ -13,33 +13,36 @@ interface IProps extends PropsWithChildren{
 }
 
 const MovieDetails: FC<IProps> = ({movie}) => {
-    const {id, poster_path, overview, release_date, vote_average, popularity, title, genres, runtime} = movie;
+    const {id, poster_path, overview, release_date, vote_average, popularity, title, genres, runtime, name} = movie;
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const {video, actors} = useAppSelector(state => state.movies);
+    const { type } = useParams<{ type: MediaType }>();
 
     useEffect(() => {
         if(id){
-            dispatch(movieActions.getVideo({id}));
-            dispatch(movieActions.getImages({id}));
-            dispatch(movieActions.getActors({id}))
+            dispatch(movieActions.getVideo({id, type}));
+            dispatch(movieActions.getImages({id, type}));
+            dispatch(movieActions.getActors({id, type}))
         }
     }, [id, dispatch]);
 
-
     const sortingGenres = (genreName: string, genreId: number) => {
+        if (!type) return
         dispatch(movieActions.setGenre(genreId));
-        dispatch(movieActions.getAll({type: 'tv', page: 1, genreId }));
+        dispatch(movieActions.getAll({type, page: 1, genreId }));
         dispatch(movieActions.setPage(1));
-        navigate(`/movies/${genreName}`);
+        navigate(`/${type}/${genreName}`);
     };
 
 
     const sortingMoviesByActors = (actorId:number, actorsName:string)=>{
+        if (!type) return
         dispatch(movieActions.setActorId(actorId));
-        dispatch(movieActions.getAll({type: '', page:1, actorId}));
+        dispatch(movieActions.getAll({type: 'movie', page:1, actorId}));
+        dispatch(movieActions.getAll({type: 'tv', page:1, actorId}));
         dispatch(movieActions.setPage(1));
-        navigate(`/movies/${actorsName}`)
+        navigate(`/${type}/${actorsName}`)
     }
 
     const photo = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
@@ -48,7 +51,7 @@ const MovieDetails: FC<IProps> = ({movie}) => {
         <div className={css.container}>
             <main className={css.main}>
                 <div className={css.firstPart}>
-                    <h1> {title}</h1>
+                    <h1> {title || name}</h1>
                     <img src={`${poster}/${poster_path}`} alt={title} className={css.moviePoster}/>
                     <div className={css.details}>
                         <div className={css.stars}><Stars rating={vote_average}/></div>
