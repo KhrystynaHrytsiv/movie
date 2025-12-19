@@ -3,7 +3,7 @@ body{
 }
 .Movies {
     width: 65%;
-    margin: 20px auto;
+    margin: 10vh auto;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -1,7 +1,7 @@
 import React, {FC, PropsWithChildren, useEffect} from "react";
 import {MediaType, poster} from "../../services";
 import {useNavigate, useParams} from "react-router-dom";
-import css from './MovieDetails.module.css'
+import css from './Details.module.css'
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {movieActions} from "../../redux/slices/movieSlice";
 import {IMovie} from "../../interfaces";

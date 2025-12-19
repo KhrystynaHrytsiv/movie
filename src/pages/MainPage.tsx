@@ -6,7 +6,7 @@ const MainPage = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const location = useLocation();
 
-    const isPlayerPage = location.pathname.includes('/player/');
+    const isPlayerPage = location.pathname.includes(`/player`);
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.pageYOffset !== 0);

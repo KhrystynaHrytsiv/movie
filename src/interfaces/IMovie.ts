@@ -18,5 +18,6 @@ export interface IMovie {
     status: string,
     vote_average: number,
     vote_count: number,
-    video: IVideo[]
+    video: IVideo[],
+    first_air_date: string
 }

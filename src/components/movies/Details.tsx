@@ -16,7 +16,7 @@ const Details: FC<IProps> = ({movie}) => {
     const {id, poster_path, backdrop_path, overview, release_date, vote_average, popularity, title, genres, runtime, name, tagline, vote_count, status} = movie;
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const {video, actors} = useAppSelector(state => state.movies);
+    const {actors} = useAppSelector(state => state.movies);
     const { type } = useParams<{ type: MediaType }>();
 
     useEffect(() => {
@@ -58,7 +58,7 @@ const Details: FC<IProps> = ({movie}) => {
             <div className={css.posterContainer}>
                 <div className={css.moviePoster}>
                     <img src={`${poster}/${poster_path}`} alt={title} className={css.poster}/>
-                    <button className={css.play}>Play Now</button>
+                    <button className={css.play} onClick={()=>navigate(`/${type}/${id}/player`)}>Play Now</button>
                 </div>
                 <div className={css.details}>
                     <h2 className={css.title}>{title || name}</h2>

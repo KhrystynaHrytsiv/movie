@@ -2,7 +2,6 @@ import React, {FC, useState} from 'react';
 import {IMovie} from "../../interfaces";
 import {AiOutlineLeft, AiOutlineRight} from "react-icons/ai";
 import css from './Slider.module.css'
-import {useNavigate} from "react-router-dom";
 import {MovieCard} from "../movies";
 
 interface IProp {
@@ -12,7 +11,6 @@ interface IProp {
 
 const Slider:FC<IProp> = ({movies, title}) => {
     const [currentImage, setCurrentImage] = useState(0);
-    const navigate = useNavigate();
     const [showControls, setShowControls] = useState(false);
 
     const handleLeft =() =>{

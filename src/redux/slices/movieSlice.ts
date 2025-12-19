@@ -14,6 +14,7 @@ interface IState {
     actors: IPeople[],
     actorId: null,
     rating: null,
+    year: number
     backImages: string
 
 }
@@ -28,18 +29,20 @@ const initialState:IState ={
     actors: [],
     actorId:null,
     rating: null,
+    year: null,
     backImages: ''
 }
 
-const getAll = createAsyncThunk<IPagination<IMovie>,{type:MediaType, page:number, genreId?: number, actorId?:number, rating?: number}>(
+const getAll = createAsyncThunk<IPagination<IMovie>,
+    {type?:MediaType, page:number, genreId?: number, actorId?:number, rating?: number, year?:number}>(
     'movieSlice/getAll',
-    async ({type, page, genreId, actorId, rating}, {rejectWithValue} ) =>{
+    async ({type, page, genreId, actorId, rating, year}, {rejectWithValue} ) =>{
         try{
-           const {data} = await movieService.getAll(type, page, genreId, actorId, rating);
-           return data
+            const {data} = await movieService.getAll(type, page, genreId, actorId, rating, year);
+            return data
         } catch (e) {
             const err = e as AxiosError
-           return rejectWithValue(err.response.data)
+            return rejectWithValue(err.response.data)
         }
     }
 )
@@ -47,22 +50,22 @@ const getMovieByType = createAsyncThunk<IMovie[],{type:MediaType, list:MediaList
     'movieSlice/getByType',
     async ({type, list}, {rejectWithValue})=>{
         try {
-        const {data} =await movieService.getMovieByType(type, list);
-        return data.results
+            const {data} =await movieService.getMovieByType(type, list);
+            return data.results
         } catch (e) {
-           return rejectWithValue(e)
+            return rejectWithValue(e)
         }
     }
 )
 const search = createAsyncThunk<IPagination<IMovie>,{query:string, page?: number} >(
     'movieSlice/search',
     async ({query, page}, {rejectWithValue})=>{
-       try{
-         const {data} = await movieService.search(query, page);
-         return data
-       } catch (e) {
-           return rejectWithValue(e)
-       }
+        try{
+            const {data} = await movieService.search(query, page);
+            return data
+        } catch (e) {
+            return rejectWithValue(e)
+        }
     }
 )
 const getVideo = createAsyncThunk<IVideo[], {id:number, type:MediaType}>(
@@ -92,8 +95,8 @@ const getActors = createAsyncThunk<IPeople[], {id:number, type:MediaType}>(
     'movieSlice/getActors',
     async ({id, type}, {rejectWithValue}) => {
         try {
-           const {data} = await movieService.people(id, type);
-           return data.cast
+            const {data} = await movieService.people(id, type);
+            return data.cast
         } catch (e) {
             return rejectWithValue(e)
         }
@@ -107,7 +110,7 @@ const movieSlice = createSlice({
             state.page = action.payload;
         },
         setGenre: (state, action)=>{
-           state.genreId = action.payload;
+            state.genreId = action.payload;
             state.actorId = null;
         },
         showAll: state => {
@@ -122,6 +125,9 @@ const movieSlice = createSlice({
             const rating = action.payload;
             state.rating = rating;
             state.filter = state.movies.filter(movie => movie.vote_average >= rating);
+        },
+        setYear : (state, action)=>{
+            state.year = action.payload;
         },
         setBackImage:(state, action)=>{
             state.backImages = action.payload
@@ -160,4 +166,3 @@ const {reducer:movieReducer, actions} = movieSlice;
 const movieActions = {...actions, getAll, search, getVideo, getImages, getActors, getMovieByType}
 
 export {movieReducer, movieActions}
-

@@ -2,7 +2,7 @@ import {useAppDispatch, useAppSelector} from "../hook/reduxHooks";
 import {useSearchParams} from "react-router-dom";
 import React, {useEffect} from "react";
 import {movieActions} from "../redux/slices/movieSlice";
-import {MovieCard, Pagination} from "../components";
+import {MovieCard, Pagination, Sorting} from "../components";
 import css from '../components/movies/Movies.module.css'
 
 
@@ -18,7 +18,9 @@ const Movies = () => {
 
     return (
         <div className={css.Movies}>
+            <Sorting/>
             {filter.map(m => <MovieCard key={m.id} movie={m} />)}
+
             <Pagination/>
         </div>
     );

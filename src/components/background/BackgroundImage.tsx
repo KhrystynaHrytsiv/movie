@@ -74,7 +74,7 @@ const BackgroundImage = () => {
                             <span>|</span>
                             <p>View : {Number(movie.popularity).toFixed(0)}</p>
                         </div>
-                        <button className={css.playButton} onClick={()=> navigate(`/player/${movie.id}`)}>Play Now</button>
+                        <button className={css.playButton} onClick={()=> navigate(`movie/${movie.id}/player`)}>Play Now</button>
                     </div>
                 </div>)}
             </div>

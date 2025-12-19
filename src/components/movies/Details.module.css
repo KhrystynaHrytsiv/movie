@@ -113,7 +113,6 @@
     font-weight: bold;
     text-align: center;
     font-size: 0.875rem;
-    color: #9ca3af;
 }
 @media (min-width: 1024px) {
     .background{
@@ -121,6 +120,7 @@
     }
     .posterContainer {
         padding: 0 0.75rem;
+        display: flex;
         flex-direction: row;
         gap: 2.5rem;
     }
