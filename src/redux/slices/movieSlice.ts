@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, isFulfilled, isRejected} from "@reduxjs/toolkit";
-import {IImage, IMovie, IPagination, IPeople, IVideo} from "../../interfaces";
+import {IImage, IMovie, IPagination, IParams, IPeople, IVideo} from "../../interfaces";
 import {MediaType, movieService, MediaList} from "../../services";
 import {AxiosError} from "axios";
 
@@ -33,12 +33,11 @@ const initialState:IState ={
     backImages: ''
 }
 
-const getAll = createAsyncThunk<IPagination<IMovie>,
-    {type?:MediaType, page:number, genreId?: number, actorId?:number, rating?: number, year?:number}>(
+const getAll = createAsyncThunk<IPagination<IMovie>,  {type:MediaType, params:IParams}>(
     'movieSlice/getAll',
-    async ({type, page, genreId, actorId, rating, year}, {rejectWithValue} ) =>{
+    async ({type, params}, {rejectWithValue} ) =>{
         try{
-            const {data} = await movieService.getAll(type, page, genreId, actorId, rating, year);
+            const {data} = await movieService.getAll(type, params);
             return data
         } catch (e) {
             const err = e as AxiosError
@@ -131,6 +130,11 @@ const movieSlice = createSlice({
         },
         setBackImage:(state, action)=>{
             state.backImages = action.payload
+        },
+        reset: (state) =>{
+            state.genreId = null;
+            state.year = null;
+            state.rating = null;
         }
     },
     extraReducers: builder =>

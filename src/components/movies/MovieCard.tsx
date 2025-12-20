@@ -10,7 +10,7 @@ interface IProps extends PropsWithChildren{
 }
 
 const MovieCard: FC<IProps> = ({movie}) => {
-    const {id, title, poster_path, vote_average, name, release_date} = movie;
+    const {id, title, poster_path, vote_average, name, release_date, first_air_date} = movie;
     const [isHovered, setIsHovered] = useState(false);
     const navigate = useNavigate();
     const rating = Number(vote_average.toFixed(1))
@@ -30,7 +30,7 @@ const MovieCard: FC<IProps> = ({movie}) => {
                     <div className={css.infoContainer}>
                         <h3 className={css.title}> {title ? title : name} </h3>
                         <div className={css.info}>
-                        <div> Release year: {release_date && new Date(release_date).getFullYear()}</div>
+                        <div> Release year: {new Date(release_date || first_air_date).getFullYear()}</div>
                             <span>|</span>
                         <div>Rating: {rating}+</div>
                         <IoIosMore title='More Info'/>

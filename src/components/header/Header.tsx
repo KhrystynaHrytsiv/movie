@@ -24,7 +24,7 @@ const Header:FC<IProp> = ({isScrolled}) => {
         <div className={`${css.header} ${isScrolled ? css.scrolled : ''}`}>
             <div className={css.nav}>
             <SiThemoviedatabase onClick={() => navigate('/')} className={css.icon}/>
-            <Link to={'movies'}>Movies</Link>
+            <Link to={'movie'}>Movies</Link>
             <Link to={'tv'}>TV Shows</Link>
             <Link to={'search'}>Search</Link>
             <div onClick={changeTheme}>{theme === 'light' ? '🌙' : '☀️'} Theme</div>

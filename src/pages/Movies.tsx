@@ -7,18 +7,18 @@ import css from '../components/movies/Movies.module.css'
 
 
 const Movies = () => {
-    const {filter, genreId, actorId} = useAppSelector(state => state.movies);
+    const {filter, genreId, actorId, rating, year} = useAppSelector(state => state.movies);
     const dispatch = useAppDispatch();
     const [query] = useSearchParams({page:'1'});
     const page = +query.get('page')
 
     useEffect(() => {
-        dispatch(movieActions.getAll({type: 'movie', page, genreId, actorId}))
-    }, [dispatch, page, genreId, actorId]);
+        dispatch(movieActions.getAll({type: 'movie', params: {page, genreId, actorId, rating, year}}))
+    }, [dispatch, page, genreId, actorId, rating, year]);
 
     return (
         <div className={css.Movies}>
-            <Sorting/>
+            <Sorting type='movie'/>
             {filter.map(m => <MovieCard key={m.id} movie={m} />)}
 
             <Pagination/>

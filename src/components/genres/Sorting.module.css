@@ -1,13 +1,14 @@
 .container {
-    width: 60%;
+    width: 80%;
     height: 50px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
-    margin: 30px auto;
+    margin: 10px auto 15px;
     background-color: rgba(0, 0, 0, 0.58);
     border-radius: 10px;
+    cursor: pointer;
 }
 .genres, .years, .rating{
     text-align: center;
@@ -15,8 +16,17 @@
     font-size: clamp(12px, 2.2em, 18px);
     /*background-color: #504b5e;*/
     border-radius: 10px;
+    cursor: pointer;
 }
 option{
-    background-color: rgba(0, 0, 0, 0.58);
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 5px;
 
+}
+.reset{
+    width: 15%;
+    text-align: center;
+    font-size: clamp(12px, 2.2em, 18px);
+    border-radius: 10px;
+    cursor: pointer;
 }

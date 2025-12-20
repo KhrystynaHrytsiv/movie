@@ -6,7 +6,7 @@ import {movieService} from "./services";
 const router = createHashRouter([
     {path: '', element:<MainPage/>  , children:[
             {index:true, element:<Home/>},
-            {path: 'movies', element:<Movies/>},
+            {path: 'movie', element:<Movies/>},
             {path: 'movie/:genreName', element:<Movies/>},
             {path: ':type/:id/:name', element:<MovieDetailsPage/>, loader: ({params:{id, type}}) => movieService.getById(+id, type as 'movie' | 'tv')},
             {path: 'tv', element:<TVShows/>},
