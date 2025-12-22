@@ -108,22 +108,33 @@ const movieSlice = createSlice({
         setPage: (state, action)=>{
             state.page = action.payload;
         },
+        // setPage: (state, action) => {
+        //     const { page, append } = action.payload;
+        //     if (append) {
+        //         // Додаємо нові фільми (наприклад, через extraReducers)
+        //         state.page = page;
+        //     } else {
+        //         // Скидаємо фільми і встановлюємо сторінку
+        //         state.page = page;
+        //         state.movies = [];
+        //         state.filter = [];
+        //     }
+        // },
         setGenre: (state, action)=>{
             state.genreId = action.payload;
             state.actorId = null;
         },
         showAll: state => {
             state.filter = state.movies;
-            state.genreId = null;
         },
         setActorId: (state, action) => {
             state.actorId = action.payload;
             state.genreId = null;
         },
-        setRatingFilter: (state, action) => {
-            const rating = action.payload;
-            state.rating = rating;
-            state.filter = state.movies.filter(movie => movie.vote_average >= rating);
+        setRating: (state, action) => {
+            state.rating = action.payload;
+            // state.rating = rating;
+            // state.filter = state.movies.filter(movie => movie.vote_average >= rating);
         },
         setYear : (state, action)=>{
             state.year = action.payload;
@@ -155,8 +166,16 @@ const movieSlice = createSlice({
                 state.movies = action.payload
             })
             .addMatcher(isFulfilled(getAll, search), (state, action)=>{
-                state.movies = action.payload.results;
-                state.filter = action.payload.results;
+                // state.movies = action.payload.results;
+                // state.filter = action.payload.results;
+                // state.page = action.payload.page;
+                if (action.payload.page === 1) {
+                    state.movies = action.payload.results;
+                    state.filter = action.payload.results;
+                } else {
+                    state.movies = [...state.movies, ...action.payload.results];
+                    state.filter = [...state.filter, ...action.payload.results];
+                }
                 state.page = action.payload.page;
 
             })

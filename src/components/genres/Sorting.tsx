@@ -12,6 +12,7 @@ interface IProps {
 const Sorting:FC<IProps> = ({type}) => {
     const dispatch = useAppDispatch();
     const {genres} = useAppSelector(state => state.genres);
+    const { genreId, year, rating } = useAppSelector(state => state.movies);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -44,7 +45,7 @@ const Sorting:FC<IProps> = ({type}) => {
 
     const filterByRating = (rating?: number)=>{
         if (rating){
-            dispatch(movieActions.setRatingFilter(rating));
+            dispatch(movieActions.setRating(rating));
         }
         dispatch(movieActions.showAll())
     }
@@ -52,23 +53,22 @@ const Sorting:FC<IProps> = ({type}) => {
     return (
         <div className={css.container}>
             <select
-                className={css.genres} onChange={(e) => {
+                className={css.genres} value={genreId ?? 'all'} onChange={(e)  => {
                 const value = e.target.value;
                 if (value === "all") return filterByGenre();
                 const genre = genres.find(g => g.id.toString() === value);
                 filterByGenre(genre.name, genre.id)}}>
-                <option value="all">Genres: All</option>
+                <option value="all">All Genres</option>
                 {genres.map(genre => (
-                    <option key={genre.id} value={genre.id}>{genre.name}</option>
-                ))}
+                    <option key={genre.id} value={genre.id}>{genre.name}</option>))}
             </select>
-            <select className={css.years} onChange={e => filterByYear(Number(e.target.value))}>
+            <select className={css.years} value={year ?? ''} onChange={e => filterByYear(Number(e.target.value))}>
                 <option value="">All years</option>
                 {years.map(year => (
                     <option key={year} value={year}>{year}</option>
                 ))}
             </select>
-            <select  className={css.rating} onChange={(e) => filterByRating(Number(e.target.value))}>
+            <select  className={css.rating} value={rating ?? ''} onChange={(e) => filterByRating(Number(e.target.value))}>
                 <option value="">All ratings</option>
                 {[10, 9, 8, 7, 6, 5].map(r => (
                     <option key={r} value={r}>{r}+</option>
@@ -80,3 +80,4 @@ const Sorting:FC<IProps> = ({type}) => {
 };
 
 export {Sorting};
+
