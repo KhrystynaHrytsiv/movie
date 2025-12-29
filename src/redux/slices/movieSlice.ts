@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, isFulfilled, isRejected} from "@reduxjs/toolkit";
-import {IImage, IMovie, IPagination, IParams, IPeople, IVideo} from "../../interfaces";
+import {IImage, IMovie, IPagination, IParams, IPeople, IPerson, IVideo} from "../../interfaces";
 import {MediaType, movieService, MediaList} from "../../services";
 import {AxiosError} from "axios";
 
@@ -15,7 +15,9 @@ interface IState {
     actorId: null,
     rating: null,
     year: number
-    backImages: string
+    backImages: string,
+    actor:IPerson,
+    total_page: number,
 
 }
 const initialState:IState ={
@@ -30,7 +32,9 @@ const initialState:IState ={
     actorId:null,
     rating: null,
     year: null,
-    backImages: ''
+    backImages: '',
+    actor: null,
+    total_page: 1,
 }
 
 const getAll = createAsyncThunk<IPagination<IMovie>,  {type:MediaType, params:IParams}>(
@@ -101,6 +105,18 @@ const getActors = createAsyncThunk<IPeople[], {id:number, type:MediaType}>(
         }
     }
 )
+
+const getActorsInfo = createAsyncThunk<IPerson, {id:number}>(
+    'movieSlice/getActorsInfo',
+    async ({id}, {rejectWithValue}) =>{
+        try{
+           const {data} = await movieService.person(id);
+           return data
+        }catch (e) {
+            return rejectWithValue(e);
+        }
+    }
+)
 const movieSlice = createSlice({
     name: 'movieSlice',
     initialState,
@@ -108,18 +124,6 @@ const movieSlice = createSlice({
         setPage: (state, action)=>{
             state.page = action.payload;
         },
-        // setPage: (state, action) => {
-        //     const { page, append } = action.payload;
-        //     if (append) {
-        //         // Додаємо нові фільми (наприклад, через extraReducers)
-        //         state.page = page;
-        //     } else {
-        //         // Скидаємо фільми і встановлюємо сторінку
-        //         state.page = page;
-        //         state.movies = [];
-        //         state.filter = [];
-        //     }
-        // },
         setGenre: (state, action)=>{
             state.genreId = action.payload;
             state.actorId = null;
@@ -133,8 +137,6 @@ const movieSlice = createSlice({
         },
         setRating: (state, action) => {
             state.rating = action.payload;
-            // state.rating = rating;
-            // state.filter = state.movies.filter(movie => movie.vote_average >= rating);
         },
         setYear : (state, action)=>{
             state.year = action.payload;
@@ -144,8 +146,10 @@ const movieSlice = createSlice({
         },
         reset: (state) =>{
             state.genreId = null;
+            state.actorId = null;
             state.year = null;
             state.rating = null;
+            state.actor = null;
         }
     },
     extraReducers: builder =>
@@ -165,19 +169,14 @@ const movieSlice = createSlice({
             .addCase(getMovieByType.fulfilled, (state, action)=>{
                 state.movies = action.payload
             })
+            .addCase(getActorsInfo.fulfilled, (state, action)=>{
+                state.actor = action.payload
+            })
             .addMatcher(isFulfilled(getAll, search), (state, action)=>{
-                // state.movies = action.payload.results;
-                // state.filter = action.payload.results;
-                // state.page = action.payload.page;
-                if (action.payload.page === 1) {
-                    state.movies = action.payload.results;
-                    state.filter = action.payload.results;
-                } else {
-                    state.movies = [...state.movies, ...action.payload.results];
-                    state.filter = [...state.filter, ...action.payload.results];
-                }
+                state.movies = action.payload.results;
+                state.filter = action.payload.results;
                 state.page = action.payload.page;
-
+                state.total_page = action.payload.total_pages;
             })
             .addMatcher(isRejected(getAll, search, getImages, getActors), state => {
                 state.errors = true
@@ -186,6 +185,6 @@ const movieSlice = createSlice({
 
 });
 const {reducer:movieReducer, actions} = movieSlice;
-const movieActions = {...actions, getAll, search, getVideo, getImages, getActors, getMovieByType}
+const movieActions = {...actions, getAll, search, getVideo, getImages, getActors, getMovieByType, getActorsInfo}
 
 export {movieReducer, movieActions}

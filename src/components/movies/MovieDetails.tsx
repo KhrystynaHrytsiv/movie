@@ -1,5 +1,5 @@
 import React, {FC, PropsWithChildren, useEffect} from "react";
-import {MediaType, poster} from "../../services";
+import {MediaType, poster, photo} from "../../services";
 import {IMovie} from "../../interfaces";
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {useNavigate, useParams} from "react-router-dom";
@@ -40,12 +40,12 @@ const MovieDetails: FC<IProps> = ({movie}) => {
     const sortingMoviesByActors = (actorId:number, actorsName:string)=>{
         if (!type) return
         dispatch(movieActions.setActorId(actorId));
+        dispatch(movieActions.getActorsInfo({ id: actorId }));
         dispatch(movieActions.getAll({type, params:{page:1, actorId}}));
         dispatch(movieActions.setPage(1));
         navigate(`/${type}/${actorsName}`)
     }
 
-    const photo = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
 
     return (
         <div className={css.main}>
@@ -95,8 +95,7 @@ const MovieDetails: FC<IProps> = ({movie}) => {
                     <div className={css.blockCast}>
                         {actors.slice(0, 18).map(actor => (
                             <div onClick={() => sortingMoviesByActors(actor.id, actor.name)}>
-                                <div><img src={actor.profile_path ? `${poster}/${actor.profile_path}` : photo}
-                                          alt={actor.name} className={css.actors}/></div>
+                                <div><img src={actor.profile_path ? `${poster}/${actor.profile_path}` : photo} alt={actor.name} className={css.actors}/></div>
                                 <p className={css.actorsName}>{actor.name}</p>
                             </div>
                         ))}

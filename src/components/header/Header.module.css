@@ -25,11 +25,6 @@
     text-decoration: none;
     color: white;
 }
-.photo{
-    height: auto;
-    width: clamp(30px, 6vw, 50px);
-
-}
 .light{
     background-color:#b8e6e3;
     color: #01012c;
@@ -44,12 +39,12 @@
 }
 
 .header:not(.scrolled) {
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0,0,0,0.5);
 
 }
 
 .scrolled {
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(8px);
 }
 @media (max-width: 600px) {
@@ -78,7 +73,7 @@
 .container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     height: 100%;
     color: #a3a3a3;
 }

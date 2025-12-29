@@ -13,7 +13,7 @@ const MovieCard: FC<IProps> = ({movie}) => {
     const {id, title, poster_path, vote_average, name, release_date, first_air_date} = movie;
     const [isHovered, setIsHovered] = useState(false);
     const navigate = useNavigate();
-    const rating = Number(vote_average.toFixed(1))
+    const rating = typeof vote_average === 'number' ? vote_average.toFixed(1) : 'N/A';
 
     const navigation = ()=>{
         const type = title ? 'movie' : 'tv';

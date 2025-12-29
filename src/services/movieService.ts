@@ -1,6 +1,6 @@
 import {apiService} from "./apiService";
 import {MediaType, urls, MediaList} from "./urls";
-import {IImage, IMovie, IPagination, IParams, IPeople, IRes, IVideo} from "../interfaces";
+import {IImage, IMovie, IPagination, IParams, IPeople, IPerson, IRes, IVideo} from "../interfaces";
 
 
 const movieService ={
@@ -10,6 +10,7 @@ const movieService ={
     video: (id:number, type:MediaType):IRes<{results: IVideo[]}> => apiService.get(urls.video(id, type)),
     images: (id:number, type:MediaType):IRes<{backdrops: IImage[]}> => apiService.get(urls.images(id, type)),
     people: (id:number, type:MediaType):IRes<{cast: IPeople[]}> => apiService.get(urls.people(id, type)),
+    person: (id: number):IRes<IPerson> => apiService.get(urls.person(id)),
 
     getAll: (type:MediaType,{page, genreId, actorId, rating, year,}:IParams): IRes<IPagination<IMovie>> => {
         const params: any = {

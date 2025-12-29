@@ -2,8 +2,9 @@ import {useAppDispatch, useAppSelector} from "../hook/reduxHooks";
 import {useSearchParams} from "react-router-dom";
 import React, {useEffect} from "react";
 import {movieActions} from "../redux/slices/movieSlice";
-import {MovieCard, Pagination, Sorting} from "../components";
+import {MovieCard, Pagination, Search, Sorting} from "../components";
 import css from '../components/movies/Movies.module.css'
+import {Actor} from "../components/actors/Actor";
 
 
 const Movies = () => {
@@ -20,8 +21,8 @@ const Movies = () => {
     return (
         <div className={css.content}>
             <div className={css.filters}><Sorting type='movie'/></div>
+            {actorId && <Actor/>}
             <div className={css.Movies}>{filter.map(m => <MovieCard key={m.id} movie={m} />)}</div>
-            <button onClick={()=>dispatch(movieActions.setPage(page+1))}>Load More</button>
             <div className={css.pagination}><Pagination/></div>
         </div>
     );

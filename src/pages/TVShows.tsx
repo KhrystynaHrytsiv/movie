@@ -4,6 +4,7 @@ import {useSearchParams} from "react-router-dom";
 import {Pagination, MovieCard, Sorting} from "../components";
 import {movieActions} from "../redux/slices/movieSlice";
 import {useAppDispatch, useAppSelector} from "../hook/reduxHooks";
+import {Actor} from "../components/actors/Actor";
 
 
 const TVShows = () => {
@@ -20,6 +21,7 @@ const TVShows = () => {
     return (
         <div className={css.content}>
             <div className={css.filters}><Sorting type='tv'/></div>
+            {actorId && <Actor/>}
             <div className={css.Movies}>{filter.map(m => <MovieCard key={m.id} movie={m} />)}</div>
             <div className={css.pagination}><Pagination/></div>
         </div>

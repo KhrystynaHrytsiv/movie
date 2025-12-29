@@ -1,4 +1,4 @@
-.pagination {
+.pagination{
     display: flex;
     justify-content: space-between;
     width: clamp(200px, 50vw, 350px);
@@ -6,7 +6,7 @@
     position: sticky;
     bottom: 5px;
 }
-.pagination button {
+.pagination button{
     flex: 1;
     padding: 8px 12px;
     background: rgba(0, 0, 0, 0.7);
@@ -16,7 +16,6 @@
     font-size: clamp(14px, 1.5vw, 18px);
     cursor: pointer;
     transition: 0.2s;
-
 }
 .pagination button:not(:disabled):hover {
     transform: scale(1.03);
