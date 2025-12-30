@@ -5,8 +5,6 @@ import {movieActions} from "../redux/slices/movieSlice";
 import {MovieCard, Pagination, Sorting, Actor} from "../components";
 import css from '../components/movies/Movies.module.css'
 
-
-
 const Movies = () => {
     const {filter, genreId, actorId, rating, year} = useAppSelector(state => state.movies);
     const dispatch = useAppDispatch();

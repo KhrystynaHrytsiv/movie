@@ -146,6 +146,10 @@ const movieSlice = createSlice({
         setBackImage:(state, action)=>{
             state.backImages = action.payload
         },
+        setSearchQuery:(state, action) =>{
+            state.searchQuery = action.payload;
+            state.page = 1;
+        },
         reset: (state) =>{
             state.genreId = null;
             state.actorId = null;

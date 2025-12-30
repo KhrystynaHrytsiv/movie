@@ -13,9 +13,7 @@ const Pagination = () => {
     let startPage = Math.floor((page - 1) / step) * step + 1;
     let endPage = startPage + WINDOW_SIZE - 1;
 
-    if (endPage > total_page) {
-        endPage = total_page;
-    }
+    if (endPage > total_page) endPage = total_page;
 
     const pages = [];
     for (let i = startPage; i <= endPage; i++) pages.push(i);
@@ -25,27 +23,15 @@ const Pagination = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    const prev = () => {
-        const newPage = Math.max(1, page - 1);
-        changePage(newPage);
-    };
-
-    const next = () => {
-        const newPage = Math.min(total_page, page + 1);
-        changePage(newPage);
-    };
-
     return (
         <div className={css.pagination}>
-            <button disabled={page === 1} onClick={prev} className={css.button}>Prev</button>
-
+            <button disabled={page === 1} onClick={() => changePage(page - 1)} className={css.button}>Prev</button>
             {pages.map(p => (
                 <button key={p} onClick={() => changePage(p)} className={`${css.button} ${p === page ? css.active : ''}`}>{p}</button>
             ))}
-
-            <button disabled={page === total_page} onClick={next} className={css.button}>Next</button>
+            <button disabled={page === total_page} onClick={() => changePage(page + 1)} className={css.button}>Next</button>
         </div>
     );
 };
 
-export { Pagination };
+export {Pagination};

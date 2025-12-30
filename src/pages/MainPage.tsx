@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Outlet, useLocation} from "react-router-dom";
-import {Header} from "../components";
+import {Header, Footer} from "../components";
 import {MobileHeader} from "../components/header/MobileHeader";
+
 
 const MainPage = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -22,6 +23,7 @@ const MainPage = () => {
             {!isPlayerPage && <Header isScrolled={isScrolled}/>}
             {!isPlayerPage && <MobileHeader/>}
             <Outlet/>
+            <Footer/>
         </div>
     );
 };
