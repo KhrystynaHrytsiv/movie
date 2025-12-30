@@ -1,13 +1,9 @@
-.pagination{
+.pagination {
     display: flex;
-    justify-content: space-between;
-    width: clamp(200px, 50vw, 350px);
     gap: 10px;
-    position: sticky;
-    bottom: 5px;
 }
-.pagination button{
-    flex: 1;
+
+.button {
     padding: 8px 12px;
     background: rgba(0, 0, 0, 0.7);
     color: white;
@@ -17,10 +13,16 @@
     cursor: pointer;
     transition: 0.2s;
 }
-.pagination button:not(:disabled):hover {
+
+.button:not(:disabled):hover {
     transform: scale(1.03);
 }
-.pagination button:disabled {
+
+.button:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+}
+
+.active {
+    background-color: #77628c;
 }

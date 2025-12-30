@@ -18,6 +18,7 @@ interface IState {
     backImages: string,
     actor:IPerson,
     total_page: number,
+    searchQuery: null
 
 }
 const initialState:IState ={
@@ -35,11 +36,12 @@ const initialState:IState ={
     backImages: '',
     actor: null,
     total_page: 1,
+    searchQuery: null
 }
 
 const getAll = createAsyncThunk<IPagination<IMovie>,  {type:MediaType, params:IParams}>(
     'movieSlice/getAll',
-    async ({type, params}, {rejectWithValue} ) =>{
+    async ({type, params}, {rejectWithValue}) =>{
         try{
             const {data} = await movieService.getAll(type, params);
             return data
@@ -150,7 +152,8 @@ const movieSlice = createSlice({
             state.year = null;
             state.rating = null;
             state.actor = null;
-        }
+            state.page = 1;
+        },
     },
     extraReducers: builder =>
         builder

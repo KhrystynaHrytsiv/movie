@@ -1,7 +1,6 @@
 export * from './Movies'
 export * from './MainPage'
 export * from './MovieDetailsPage'
-export * from './SearchPage'
 export * from './TVShows'
 export * from './Home'
 export * from './Player'

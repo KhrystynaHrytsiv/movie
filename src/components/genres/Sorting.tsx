@@ -74,7 +74,7 @@ const Sorting:FC<IProps> = ({type}) => {
                     <option key={r} value={r}>{r}+</option>
                 ))}
             </select>
-            <button onClick={()=>dispatch(movieActions.reset())} className={css.reset}>Reset</button>
+            <button onClick={()=> dispatch(movieActions.reset())} className={css.reset}>Reset</button>
         </div>
     );
 };

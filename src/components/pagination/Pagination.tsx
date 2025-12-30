@@ -1,36 +1,51 @@
 import React from 'react';
-import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
+import {useAppSelector} from "../../hook/reduxHooks";
 import {useSearchParams} from "react-router-dom";
-import {movieActions} from "../../redux/slices/movieSlice";
-import css from './Pagination.module.css'
+import css from './Pagination.module.css';
 
 const Pagination = () => {
-  const {page,  total_page} = useAppSelector(state => state.movies);
-  const dispatch = useAppDispatch();
     const [, setQuery] = useSearchParams({page:'1'});
+    const { page, total_page } = useAppSelector(state => state.movies);
 
-    const prev =()=>{
-        dispatch(movieActions.setPage(page -1))
-        setQuery(prev1 => {
-            prev1.set('page', `${+prev1.get('page')-1}`)
-            return prev1
-        })
+    const WINDOW_SIZE = 10;
+    const step = 5;
+
+    let startPage = Math.floor((page - 1) / step) * step + 1;
+    let endPage = startPage + WINDOW_SIZE - 1;
+
+    if (endPage > total_page) {
+        endPage = total_page;
     }
 
-    const next =()=>{
-        dispatch(movieActions.setPage(page+1))
-        setQuery(prev1 => {
-            prev1.set('page', `${+prev1.get('page')+1}`)
-            return prev1
-        })
-    }
+    const pages = [];
+    for (let i = startPage; i <= endPage; i++) pages.push(i);
+
+    const changePage = (pageNumber: number) => {
+        setQuery({ page: pageNumber.toString() });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const prev = () => {
+        const newPage = Math.max(1, page - 1);
+        changePage(newPage);
+    };
+
+    const next = () => {
+        const newPage = Math.min(total_page, page + 1);
+        changePage(newPage);
+    };
 
     return (
         <div className={css.pagination}>
-            <button disabled={page===1} onClick={prev}>Prev</button>
-            <button disabled={page>= total_page} onClick={next}>Next</button>
+            <button disabled={page === 1} onClick={prev} className={css.button}>Prev</button>
+
+            {pages.map(p => (
+                <button key={p} onClick={() => changePage(p)} className={`${css.button} ${p === page ? css.active : ''}`}>{p}</button>
+            ))}
+
+            <button disabled={page === total_page} onClick={next} className={css.button}>Next</button>
         </div>
     );
 };
 
-export {Pagination};
+export { Pagination };
