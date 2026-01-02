@@ -4,6 +4,7 @@ import {movieActions} from "../redux/slices/movieSlice";
 import {useNavigate, useParams} from "react-router-dom";
 import {BsArrowLeft} from "react-icons/bs";
 import {MediaType} from "../services";
+import css from '../components/Player.module.css'
 
 
 const Player = () => {
@@ -19,14 +20,16 @@ const Player = () => {
         if(movieId){
             dispatch(movieActions.getVideo({id: movieId, type}))
         }
-    }, [movieId, type]);
+    }, [movieId, type, dispatch]);
 
     return (
-        <div style={{position:'relative', overflow: 'hidden'}}>
-            <BsArrowLeft onClick={()=> navigate(-1)} style={{height:'40px', width:'40px', fontWeight: 'bold',position:"absolute", left: '10px', top: '20px', backgroundColor: 'rgba(229,229,229,0.5)', color: 'black', borderRadius: '50%'}}/>
+        <div className={css.block}>
+            <BsArrowLeft onClick={()=> navigate(-1)} className={css.arrow}/>
             {video && video.filter(v => v.site === 'YouTube' && v.type === 'Trailer').length > 0 ? (
                     video.filter(v => v.site === 'YouTube' && v.type === 'Trailer').slice(0, 1).map(v => (
-                        <iframe key={v.id} src={`https://www.youtube.com/embed/${v.key}`} title={v.name} allowFullScreen style={{height: '100vh', width:'100vw'}}></iframe>)))
+                        <div className={css.player}>
+                            <iframe key={v.id} src={`https://www.youtube.com/embed/${v.key}`} title={v.name} allowFullScreen></iframe>
+                        </div>)))
                 : (<h1>Trailer not found</h1>)}
         </div>
     );

@@ -51,6 +51,7 @@ const getAll = createAsyncThunk<IPagination<IMovie>,  {type:MediaType, params:IP
         }
     }
 )
+
 const getMovieByType = createAsyncThunk<IMovie[],{type:MediaType, list:MediaList}>(
     'movieSlice/getByType',
     async ({type, list}, {rejectWithValue})=>{
@@ -180,7 +181,7 @@ const movieSlice = createSlice({
                 state.actor = action.payload
             })
             .addMatcher(isFulfilled(getAll, search), (state, action)=>{
-                state.movies = action.payload.results;
+                state.movies =action.payload.results;
                 state.filter = action.payload.results;
                 state.page = action.payload.page;
                 state.total_page = action.payload.total_pages;

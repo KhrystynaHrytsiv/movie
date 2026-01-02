@@ -37,17 +37,6 @@ const BackgroundImage = () => {
         }
     }
 
-    // useEffect(()=>{
-    //     const interval = setInterval(()=>{
-    //         if(currentImage < movies.length - 1){
-    //             handleRight()
-    //         }else{
-    //             setCurrentImage(0)
-    //         }
-    //     },5000)
-    //
-    //     return ()=>clearInterval(interval)
-    // },[movies,currentImage])
     return (
         <section className={css.section}>
             <div className={css.wrapper}>
@@ -56,13 +45,8 @@ const BackgroundImage = () => {
                     <img src={backImages + movie.backdrop_path} alt={movie.title} className={css.image}/>
 
                     <div className={css.buttonsWrapper}>
-                        <button className={css.button} onClick={handleLeft}>
-                            <FaAngleLeft/>
-                        </button>
-                        <button className={css.button} onClick={handleRight}>
-                          <FaAngleRight/>
-                        </button>
-
+                        <button className={css.button} onClick={handleLeft}><FaAngleLeft/></button>
+                        <button className={css.button} onClick={handleRight}><FaAngleRight/></button>
                     </div>
 
                     <div className={css.gradientOverlay}></div>
