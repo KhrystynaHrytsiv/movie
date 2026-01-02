@@ -14,7 +14,6 @@ const Actor = () => {
                     <div className={css.actorContent}>
                         <h2 className={css.actorName}>{actor.name}</h2>
                         <p className={css.actorBio}>{actor.biography || 'Biography not available'}</p>
-
                         <div className={css.actorMeta}>
                             {actor.birthday && <span>🎂 {actor.birthday}</span>}
                             {actor.place_of_birth && <span>📍 {actor.place_of_birth}</span>}

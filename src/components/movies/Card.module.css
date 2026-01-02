@@ -1,11 +1,11 @@
 .movie {
-    width: 210px;
-    height: 100%;
+   width: 210px;
     position: relative;
     cursor: pointer;
     overflow: visible;
     margin: 8px;
 }
+
 
 .img {
     width: 100%;
@@ -55,23 +55,24 @@
     font-size: 13px;
 }
 
-@media (max-width: 900px) and (min-width: 551px) {
-    .movie {
-        width: calc(33.33% - 10px);
-    }
-    .title {
-        height: 10%;
-        font-size: clamp(14px, 2vw, 17px);
-    }
-}
+/*@media (max-width: 900px) {*/
+/*    .movie {*/
+/*        width: calc(33.33% - 10px);*/
+/*    }*/
+/*    .title {*/
+/*        height: 10%;*/
+/*        font-size: clamp(14px, 2vw, 16px);*/
+/*    }*/
+/*}*/
 
-@media (max-width: 550px) {
-    .movie {
-        width: calc(50% - 10px);
-    }
-    .title {
-        height: 10%;
-        font-size: clamp(12px, 2vw, 16px);
-    }
+/*@media (max-width: 550px) {*/
+/*    .movie {*/
+/*        width: calc(50% - 10px);*/
 
-}
+/*    }*/
+/*    .title {*/
+/*        height: 10%;*/
+/*        font-size: clamp(12px, 2vw, 16px);*/
+/*    }*/
+
+/*}*/

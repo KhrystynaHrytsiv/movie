@@ -9,19 +9,19 @@ body{
     position: relative;
 }
 .filters{
-    width: 60%;
+    width: 70%;
     margin: 10px auto;
 }
 .Movies {
-    width: 60%;
+    width: 70%;
     margin: 0 auto;
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
 }
+
 .paginationWrapper {
-    width: 60%;
+    width: 70%;
     margin: 10px auto;
     display: flex;
     justify-content: center;
