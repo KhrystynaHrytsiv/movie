@@ -1,9 +1,9 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
+import React, {FC, useEffect, useMemo} from 'react';
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {movieActions} from "../../redux/slices/movieSlice";
 import {genreActions} from "../../redux/slices/genreSlice";
 import css from './Sorting.module.css'
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {MediaType} from "../../services";
 
 interface IProps {
@@ -52,8 +52,8 @@ const Sorting:FC<IProps> = ({type}) => {
 
     const reset =()=>{
         dispatch(movieActions.reset());
+        dispatch(movieActions.setPage(1));
         navigate(`/${type}`, { replace: true });
-        dispatch(movieActions.getAll({ type, params: { page: 1 }}))
     }
     return (
         <div className={css.container}>

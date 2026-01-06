@@ -6,10 +6,12 @@ import {MovieCard, Pagination, Sorting, Actor} from "../components";
 import css from '../components/movies/Movies.module.css'
 
 const Movies = () => {
-    const {filter, genreId, actorId, rating, year} = useAppSelector(state => state.movies);
+    const {filter, genreId, actorId, rating, year, page:reduxPage} = useAppSelector(state => state.movies);
     const dispatch = useAppDispatch();
     const [query, setQuery] = useSearchParams({page:'1'});
-    const page =  +(query.get('page') ?? 1);
+    const urlPage =  +(query.get('page') ?? 1)
+    const page = reduxPage !== urlPage && reduxPage === 1 ? reduxPage : urlPage;
+
 
     useEffect(() => {
         if (!query.get('page')) setQuery({ page: '1' });

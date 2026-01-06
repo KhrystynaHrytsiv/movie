@@ -39,19 +39,19 @@ const initialState:IState ={
     searchQuery: null
 }
 
-const getAll = createAsyncThunk<IPagination<IMovie>,  {type:MediaType, params:IParams}>(
+
+const getAll = createAsyncThunk<IPagination<IMovie>, { type: MediaType; params: IParams }>(
     'movieSlice/getAll',
-    async ({type, params}, {rejectWithValue}) =>{
-        try{
-            const {data} = await movieService.getAll(type, params);
-            return data
+    async ({ type, params }, { rejectWithValue }) => {
+        try {
+            const { data } = await movieService.getAll(type, params);
+            return data;
         } catch (e) {
-            const err = e as AxiosError
-            return rejectWithValue(err.response.data)
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
         }
     }
-)
-
+);
 const getMovieByType = createAsyncThunk<IMovie[],{type:MediaType, list:MediaList}>(
     'movieSlice/getByType',
     async ({type, list}, {rejectWithValue})=>{
@@ -182,14 +182,13 @@ const movieSlice = createSlice({
             })
             .addMatcher(isFulfilled(getAll, search), (state, action)=>{
                 state.movies =action.payload.results;
-                state.filter = action.payload.results;
+                state.filter =action.payload.results;
                 state.page = action.payload.page;
                 state.total_page = action.payload.total_pages;
             })
             .addMatcher(isRejected(getAll, search, getImages, getActors), state => {
                 state.errors = true
             })
-
 
 });
 const {reducer:movieReducer, actions} = movieSlice;
