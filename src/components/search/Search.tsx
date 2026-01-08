@@ -26,7 +26,7 @@ const Search = () => {
         if (!searchQuery) return;
         dispatch(movieActions.search({ query: searchQuery, page }));
     }, [dispatch, page, searchQuery]);
-
+    console.log(filter);
     return (
         <div>
             <form onSubmit={search} className={css.search}>

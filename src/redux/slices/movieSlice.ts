@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice, isFulfilled, isRejected} from "@reduxjs/toolkit";
 import {IImage, IMovie, IPagination, IParams, IPeople, IPerson, IVideo} from "../../interfaces";
-import {MediaType, movieService, MediaList} from "../../services";
+import {MediaList, MediaType, movieService} from "../../services";
 import {AxiosError} from "axios";
 
 interface IState {
@@ -18,8 +18,9 @@ interface IState {
     backImages: string,
     actor:IPerson,
     total_page: number,
-    searchQuery: null
-
+    searchQuery: null,
+    cachedSearchPages: Record<number, IMovie[]>,
+    totalSearchPages: number;
 }
 const initialState:IState ={
     movies:[],
@@ -36,23 +37,28 @@ const initialState:IState ={
     backImages: '',
     actor: null,
     total_page: 1,
-    searchQuery: null
+    searchQuery: null,
+    cachedSearchPages: {},
+    totalSearchPages:1
 }
 
 
 const getAll = createAsyncThunk<IPagination<IMovie>, { type: MediaType; params: IParams }>(
     'movieSlice/getAll',
-    const filterMovie = movies.filter(movie => movie.poster_path)
     async ({ type, params }, { rejectWithValue }) => {
         try {
             const { data } = await movieService.getAll(type, params);
-            return data;
+           return {
+               ...data,
+               results: data.results.filter(movie => Boolean(movie.poster_path))
+           }
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response?.data);
         }
     }
 );
+
 const getMovieByType = createAsyncThunk<IMovie[],{type:MediaType, list:MediaList}>(
     'movieSlice/getByType',
     async ({type, list}, {rejectWithValue})=>{
@@ -69,12 +75,56 @@ const search = createAsyncThunk<IPagination<IMovie>,{query:string, page?: number
     async ({query, page}, {rejectWithValue})=>{
         try{
             const {data} = await movieService.search(query, page);
-            return data
+            return {
+                ...data,
+                results: data.results.filter(movie => Boolean(movie.poster_path))
+            }
         } catch (e) {
             return rejectWithValue(e)
         }
     }
 )
+
+
+// const search = createAsyncThunk<
+//     { page: number; results: IMovie[]; totalPages: number },
+//     { query: string; page: number },
+//     { state: any }
+// >(
+//     'movieSlice/search',
+//     async ({ query, page }, { rejectWithValue, getState }) => {
+//         try {
+//             const state = getState();
+//             let cachedMovies: IMovie[] = state.movies.cachedMovies || [];
+//
+//             if (cachedMovies.length === 0 || state.movies.searchQuery !== query) {
+//                 // Якщо кеш пустий або запит змінився — підвантажуємо всі сторінки API
+//                 cachedMovies = [];
+//                 let apiPage = 1;
+//                 let totalApiPages = 1;
+//
+//                 while (apiPage <= totalApiPages) {
+//                     const response = await movieService.search(query, apiPage);
+//                     const data = response.data;
+//                     totalApiPages = data.total_pages;
+//
+//                     cachedMovies.push(...data.results.filter(m => Boolean(m.poster_path)));
+//
+//                     apiPage++;
+//                 }
+//             }
+//
+//             const totalPages = Math.ceil(cachedMovies.length / 20);
+//             const start = (page - 1) * 20;
+//             const results = cachedMovies.slice(start, start + 20);
+//
+//             return { page, results, totalPages, cachedMovies };
+//         } catch {
+//             return rejectWithValue('Search failed');
+//         }
+//     }
+// );
+
 const getVideo = createAsyncThunk<IVideo[], {id:number, type:MediaType}>(
     'movieSlice/getVideo',
     async ({id, type}, {rejectWithValue})=>{
@@ -181,12 +231,18 @@ const movieSlice = createSlice({
             .addCase(getActorsInfo.fulfilled, (state, action)=>{
                 state.actor = action.payload
             })
-            .addMatcher(isFulfilled(getAll, search), (state, action)=>{
+            .addCase(getAll.fulfilled, (state, action)=>{
                 state.movies =action.payload.results;
                 state.filter =action.payload.results;
                 state.page = action.payload.page;
                 state.total_page = action.payload.total_pages;
             })
+            // .addCase(search.fulfilled, (state, action)=>{
+            // state.cachedMovies = action.payload.cachedMovies;
+            // state.totalPages = action.payload.totalPages;
+            // state.page = action.payload.page;
+            // state.searchResults = action.payload.results;
+            // })
             .addMatcher(isRejected(getAll, search, getImages, getActors), state => {
                 state.errors = true
             })
