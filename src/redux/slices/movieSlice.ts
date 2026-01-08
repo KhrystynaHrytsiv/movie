@@ -42,6 +42,7 @@ const initialState:IState ={
 
 const getAll = createAsyncThunk<IPagination<IMovie>, { type: MediaType; params: IParams }>(
     'movieSlice/getAll',
+    const filterMovie = movies.filter(movie => movie.poster_path)
     async ({ type, params }, { rejectWithValue }) => {
         try {
             const { data } = await movieService.getAll(type, params);
