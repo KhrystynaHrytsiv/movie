@@ -38,7 +38,6 @@
     display: none;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1rem;
     z-index: 10;
 }
 
@@ -72,13 +71,13 @@
     max-width: 26rem;
     padding: 0 0.75rem;
     color: white;
-    font-size: 1.2rem;
+    font-size:  clamp(16px, 2.2vw, 20px);
     left: 3rem;
 }
 
 .title {
     font-weight: bold;
-    font-size: 2.5rem;
+    font-size: clamp(1.2rem, 2.2vw, 2.5rem);
     text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
 }
 
@@ -98,7 +97,7 @@
 
 .playButton {
     background-color: white;
-    font-size: 1.3rem;
+    font-size: clamp( 0.9rem, 2vw, 1.3rem);
     color: black;
     font-weight: bold;
     padding: 0.5rem 1rem;
@@ -114,4 +113,10 @@
     background: linear-gradient(to left, #b91c1c, #f97316);
     transform: scale(1.05);
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+@media (max-width: 550px) {
+    .details{
+        width: 95%;
+        left: 0;
+    }
 }

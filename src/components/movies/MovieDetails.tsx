@@ -1,11 +1,13 @@
 import React, {FC, PropsWithChildren, useEffect} from "react";
-import {MediaType, poster, photo} from "../../services";
+import {MediaType, photo, poster} from "../../services";
 import {IMovie} from "../../interfaces";
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {useNavigate, useParams} from "react-router-dom";
 import {movieActions} from "../../redux/slices/movieSlice";
 import {Gallery} from "../gallery";
 import css from './Details.module.css'
+import {FaArrowLeftLong} from "react-icons/fa6";
+import {useWindowWidth} from "../../hook/adaptiveWidth";
 
 
 interface IProps extends PropsWithChildren{
@@ -51,6 +53,7 @@ const MovieDetails: FC<IProps> = ({movie}) => {
         <div className={css.main}>
             <div className={css.background}>
                 <div className={css.imageContainer}>
+                    {useWindowWidth() < 900 && <div onClick={() => navigate(-1)} className={css.arrow}><FaArrowLeftLong/> </div>}
                     <img src={`${poster}/${backdrop_path}`} alt={title} className={css.movieBackground}/>
                 </div>
                 <div className={css.black}></div>

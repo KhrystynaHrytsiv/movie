@@ -8,6 +8,7 @@
     }
 }
 .wrapper{
+
     .slider{
         display: flex;
         width: max-content;
@@ -16,15 +17,12 @@
         margin-left: 50px;
     }
     .buttons{
-        display: flex;
-        justify-content: center;
-        align-items: center;
         position: absolute;
         z-index: 99;
         height: 50px;
         border-radius: 50%;
         background-color: white;
-        top: 200px;
+        top: 210px;
         bottom: 0;
         width: 50px;
         transition: 0.3s ease-in-out;
@@ -37,10 +35,10 @@
         display: none;
     }
     .left{
-        left: 0;
+        left: 5px;
     }
     .right{
-        right: 0;
+        right: 5px;
     }
 
 }

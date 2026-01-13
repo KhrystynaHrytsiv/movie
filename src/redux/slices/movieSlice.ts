@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice, isFulfilled, isRejected} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isRejected} from "@reduxjs/toolkit";
 import {IImage, IMovie, IPagination, IParams, IPeople, IPerson, IVideo} from "../../interfaces";
 import {MediaList, MediaType, movieService} from "../../services";
 import {AxiosError} from "axios";
@@ -18,9 +18,7 @@ interface IState {
     backImages: string,
     actor:IPerson,
     total_page: number,
-    searchQuery: null,
-    cachedSearchPages: Record<number, IMovie[]>,
-    totalSearchPages: number;
+    searchQuery: null
 }
 const initialState:IState ={
     movies:[],
@@ -37,9 +35,7 @@ const initialState:IState ={
     backImages: '',
     actor: null,
     total_page: 1,
-    searchQuery: null,
-    cachedSearchPages: {},
-    totalSearchPages:1
+    searchQuery: null
 }
 
 
@@ -70,8 +66,11 @@ const getMovieByType = createAsyncThunk<IMovie[],{type:MediaType, list:MediaList
         }
     }
 )
+
+
 const search = createAsyncThunk<IPagination<IMovie>,{query:string, page?: number} >(
     'movieSlice/search',
+
     async ({query, page}, {rejectWithValue})=>{
         try{
             const {data} = await movieService.search(query, page);
@@ -85,45 +84,6 @@ const search = createAsyncThunk<IPagination<IMovie>,{query:string, page?: number
     }
 )
 
-
-// const search = createAsyncThunk<
-//     { page: number; results: IMovie[]; totalPages: number },
-//     { query: string; page: number },
-//     { state: any }
-// >(
-//     'movieSlice/search',
-//     async ({ query, page }, { rejectWithValue, getState }) => {
-//         try {
-//             const state = getState();
-//             let cachedMovies: IMovie[] = state.movies.cachedMovies || [];
-//
-//             if (cachedMovies.length === 0 || state.movies.searchQuery !== query) {
-//                 // Якщо кеш пустий або запит змінився — підвантажуємо всі сторінки API
-//                 cachedMovies = [];
-//                 let apiPage = 1;
-//                 let totalApiPages = 1;
-//
-//                 while (apiPage <= totalApiPages) {
-//                     const response = await movieService.search(query, apiPage);
-//                     const data = response.data;
-//                     totalApiPages = data.total_pages;
-//
-//                     cachedMovies.push(...data.results.filter(m => Boolean(m.poster_path)));
-//
-//                     apiPage++;
-//                 }
-//             }
-//
-//             const totalPages = Math.ceil(cachedMovies.length / 20);
-//             const start = (page - 1) * 20;
-//             const results = cachedMovies.slice(start, start + 20);
-//
-//             return { page, results, totalPages, cachedMovies };
-//         } catch {
-//             return rejectWithValue('Search failed');
-//         }
-//     }
-// );
 
 const getVideo = createAsyncThunk<IVideo[], {id:number, type:MediaType}>(
     'movieSlice/getVideo',
@@ -237,12 +197,13 @@ const movieSlice = createSlice({
                 state.page = action.payload.page;
                 state.total_page = action.payload.total_pages;
             })
-            // .addCase(search.fulfilled, (state, action)=>{
-            // state.cachedMovies = action.payload.cachedMovies;
-            // state.totalPages = action.payload.totalPages;
-            // state.page = action.payload.page;
-            // state.searchResults = action.payload.results;
-            // })
+            .addCase(search.fulfilled, (state, action)=>{
+                state.movies =action.payload.results;
+                state.filter =action.payload.results;
+                state.page = action.payload.page;
+                state.total_page = action.payload.total_pages;
+            })
+
             .addMatcher(isRejected(getAll, search, getImages, getActors), state => {
                 state.errors = true
             })

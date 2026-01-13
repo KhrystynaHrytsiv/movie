@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {useSearchParams} from "react-router-dom";
 import css from './Pagination.module.css';
 import {movieActions} from "../../redux/slices/movieSlice";
-import {useWindowWidth} from "../../hook/adaptivePagination";
+import {useWindowWidth} from "../../hook/adaptiveWidth";
 
 const Pagination = () => {
     const [, setQuery] = useSearchParams({page:'1'});

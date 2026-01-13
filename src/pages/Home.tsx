@@ -16,7 +16,6 @@ const Home = () => {
         movieService.getMovieByType('tv','top_rated').then(({data})=> setUpcoming(data.results))
 
     }, []);
-
     return (
         <div>
             <BackgroundImage/>
