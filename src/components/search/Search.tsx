@@ -10,6 +10,7 @@ const Search = () => {
     const dispatch = useAppDispatch();
     const [query, setQuery] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
+    const [searchStart, setSearchStart] = useState(false)
 
     const {searchQuery, loading} = useAppSelector(state => state.movies);
     const page = +(searchParams.get('page') ?? 1);
@@ -21,6 +22,7 @@ const Search = () => {
         if (!trimmed) return;
         dispatch(movieActions.setSearchQuery(trimmed));
         setSearchParams({ page: '1' });
+        setSearchStart(true)
     };
 
     useEffect(() => {
@@ -39,16 +41,18 @@ const Search = () => {
                     <button className={css.button}>Search</button>
                 </div>
             </form>
-            {loading ? (<div className={css.loading}>Loading...</div>)
+            {loading && searchStart ? (<div className={css.loading}>Loading...</div>)
                 :
-                (<div className={cs1.Movies}>
-            {movies.length > 0 ? (movies.map(movie => <MovieCard key={movie.id} movie={movie} />))
-                    : searchQuery ? (<h2>🔍 No results found</h2>)
-                    : null}
-            </div>)
-            }
-            <div className={css.pagination}><Pagination /></div>
+                <div className={css.wrapper}>
+                    <div className={cs1.Movies} style={{flex: '1'}}>
+                        {movies.length > 0 ? (movies.map(movie => <MovieCard key={movie.id} movie={movie}/>))
+                            : searchQuery ? (<h2>🔍 No results found</h2>)
+                                : null}
+                    </div>
+                    <div className={css.pagination}><Pagination/></div>
+                </div>}
         </div>
     );
+
 };
 export {Search}

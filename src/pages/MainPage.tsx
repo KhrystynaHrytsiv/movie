@@ -3,7 +3,6 @@ import {Outlet, useLocation} from "react-router-dom";
 import {Header, Footer} from "../components";
 import {MobileHeader} from "../components/header/MobileHeader";
 
-
 const MainPage = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const location = useLocation();
@@ -19,11 +18,11 @@ const MainPage = () => {
         };
     }, []);
     return (
-        <div>
+        <div style={{display: "flex", flexDirection: 'column', position: 'relative', minHeight: '100vh'}}>
             {!isPlayerPage && <Header isScrolled={isScrolled}/>}
             {!isPlayerPage && <MobileHeader/>}
-            <Outlet/>
-            <Footer/>
+            <main style={{flex: '1'}}><Outlet/></main>
+           <Footer/>
         </div>
     );
 };
