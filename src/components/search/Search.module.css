@@ -24,6 +24,11 @@
     font-size: clamp(14px, 1.6vw, 18px);
     cursor: pointer;
 }
+.loading{
+    font-size: clamp(14px, 1.6vw, 30px);
+    margin: 5px;
+    text-align: center;
+}
 .pagination{
     display: flex;
     justify-content: center;

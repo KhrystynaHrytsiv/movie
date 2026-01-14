@@ -9,6 +9,7 @@ const Home = () => {
     const [popular, setPopular] = useState([]);
     const [topRated, setTopRated] =useState([]);
     const [upcoming, setUpcoming] = useState([]);
+
     useEffect(() => {
         movieService.getMovieByType('movie','now_playing').then(({data})=>setNowPlaying(data.results))
         movieService.getMovieByType('tv','popular').then(({data})=>setPopular(data.results))

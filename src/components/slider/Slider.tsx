@@ -33,7 +33,7 @@ const Slider:FC<IProp> = ({movies, title}) => {
         }
     }
     const handleRight =() => {
-        if (index < movies.length -1) {
+        if (index < movies.length ) {
             setIndex(prev => prev + 1)
         }
     }
@@ -46,7 +46,7 @@ const Slider:FC<IProp> = ({movies, title}) => {
                 <div className={css.slider} ref={sliderRef} style={{ transform : `translateX(-${index * getCardWidth()}px)`}}>
                 {movies.map(movie=><MovieCard movie={movie} key={movie.id} />)}
                 </div>
-                {index < movies.length - getVisibleCards() &&<AiOutlineRight onClick={handleRight} className={`${css.buttons} ${css.right} ${!showControls ? 'none' : ''}`}/>}
+                {index < 22 - getVisibleCards() &&<AiOutlineRight onClick={handleRight} className={`${css.buttons} ${css.right} ${!showControls ? 'none' : ''}`}/>}
 
             </div>
         </section>
