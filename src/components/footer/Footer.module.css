@@ -59,9 +59,10 @@
         width: 95%;
         height: auto;
         flex-direction: column;
-        gap: 10px;
+        gap: 5px;
         align-items: center;
         text-align: center;
+        padding-bottom: 45px;
     }
     .general p {
         max-width: 100%;

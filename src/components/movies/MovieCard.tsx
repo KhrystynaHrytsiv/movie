@@ -20,10 +20,10 @@ const MovieCard: FC<IProps> = ({movie}) => {
         navigate(`/${type}/${id}/${title || name}`)
     }
     return (
-        <div className={css.movie}  onClick={navigation} onMouseEnter={()=> setIsHovered(true)} onMouseLeave={()=>setIsHovered(false)}>
+        <div className={css.movie} onClick={navigation} onMouseEnter={()=> setIsHovered(true)} onMouseLeave={()=>setIsHovered(false)}>
             <img src={`${poster}/${poster_path}`} alt={title} className={css.img}/>
             {isHovered && (
-                <div className={css.hover}>
+                <div className={css.hover} onClick={()=>setIsHovered(true)}>
                     <div className={css.imgContainer}>
                      <img src={`${poster}/${poster_path}`} alt={title} className={css.img}/>
                     </div>

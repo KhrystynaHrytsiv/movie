@@ -4,7 +4,7 @@ import {IGenre} from "../../interfaces";
 
 interface IState{
     genres:IGenre[],
-};
+}
 
 const initialState:IState ={
     genres:[]

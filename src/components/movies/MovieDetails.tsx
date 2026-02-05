@@ -96,7 +96,7 @@ const MovieDetails: FC<IProps> = ({movie}) => {
                     <hr/>
                     <h2 className={css.hActors}>Actors :</h2>
                     <div className={css.blockCast}>
-                        {actors.slice(0, 18).map(actor => (
+                        {actors && actors.slice(0, 18).map(actor => (
                             <div key={actor.id} onClick={() => sortingMoviesByActors(actor.id, actor.name)}>
                                 <div><img src={actor.profile_path ? `${poster}/${actor.profile_path}` : photo} alt={actor.name} className={css.actors}/></div>
                                 <p className={css.actorsName}>{actor.name}</p>

@@ -14,7 +14,7 @@ const Footer = () => {
                 <div className={css.linkContainer}>
                     <p>Social Media</p>
                     <div className={css.links}>
-                        <a href="https://github.com/KhrystynaHrytsiv/movie" target="_blank" rel="noreferrer"><FaGithub/></a>
+                        <a href="https://github.com/KhrystynaHrytsiv/" target="_blank" rel="noreferrer"><FaGithub/></a>
                         <a href="https://www.linkedin.com/in/khrystyna-hrytsiv-75b35038a/" target="_blank" rel="noreferrer"> <FaLinkedin/></a>
                         <a href="https://t.me/khrystynka_hrytsiv" target="_blank" rel="noreferrer"> <FaTelegram/></a>
                         <a href="https://www.instagram.com/khrystyna_hrytsiv?igsh=YTdwY2tudW5jeG5v/" target="_blank" rel="noreferrer"><FaInstagram/></a>

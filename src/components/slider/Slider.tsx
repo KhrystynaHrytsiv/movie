@@ -47,7 +47,6 @@ const Slider:FC<IProp> = ({movies, title}) => {
                 {movies.map(movie=><MovieCard movie={movie} key={movie.id} />)}
                 </div>
                 {index < 22 - getVisibleCards() &&<AiOutlineRight onClick={handleRight} className={`${css.buttons} ${css.right} ${!showControls ? 'none' : ''}`}/>}
-
             </div>
         </section>
     );

@@ -3,14 +3,13 @@ import {apiService, baseURL} from "../../services";
 import {movieActions} from "../../redux/slices/movieSlice";
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import css from './BackImage.module.css'
-import {FaAngleRight} from "react-icons/fa6";
-import {FaAngleLeft} from "react-icons/fa";
+import {FaAngleRight, FaAngleLeft} from "react-icons/fa6";
 import {useNavigate} from "react-router-dom";
 
 const BackgroundImage = () => {
     const dispatch = useAppDispatch();
     const {movies, backImages} = useAppSelector(state => state.movies);
-    const [currentImage, setCurrentImage] = useState(0)
+    const [currentImage, setCurrentImage] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -45,7 +44,7 @@ const BackgroundImage = () => {
                     <img src={backImages + movie.backdrop_path} alt={movie.title} className={css.image}/>
 
                     <div className={css.buttonsWrapper}>
-                        <button className={css.button} onClick={handleLeft}><FaAngleLeft/></button>
+                        <button className={css.button} onClick={handleLeft}><FaAngleLeft /></button>
                         <button className={css.button} onClick={handleRight}><FaAngleRight/></button>
                     </div>
 
