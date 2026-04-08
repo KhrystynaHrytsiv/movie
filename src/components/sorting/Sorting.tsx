@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useMemo} from 'react';
+import React, {ChangeEvent, FC, useEffect, useMemo} from 'react';
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {movieActions} from "../../redux/slices/movieSlice";
 import {genreActions} from "../../redux/slices/genreSlice";
@@ -6,10 +6,7 @@ import css from './Sorting.module.css'
 import {useNavigate} from "react-router-dom";
 import {MediaType} from "../../services";
 
-interface IProps {
-   type:MediaType
-}
-const Sorting:FC<IProps> = ({type}) => {
+const Sorting:FC<{type:MediaType}> = ({type}) => {
     const dispatch = useAppDispatch();
     const {genres} = useAppSelector(state => state.genres);
     const { genreId, year, rating } = useAppSelector(state => state.movies);
@@ -46,8 +43,9 @@ const Sorting:FC<IProps> = ({type}) => {
     const filterByRating = (rating?: number)=>{
         if (rating){
             dispatch(movieActions.setRating(rating));
+        } else {
+            dispatch(movieActions.showAll())
         }
-        dispatch(movieActions.showAll())
     }
 
     const reset =()=>{
@@ -55,14 +53,17 @@ const Sorting:FC<IProps> = ({type}) => {
         dispatch(movieActions.setPage(1));
         navigate(`/${type}`, { replace: true });
     }
+
+    const handleChange = (e:ChangeEvent<HTMLSelectElement>) =>{
+        const value = e.target.value;
+        if (value === "all") return filterByGenre();
+        const genre = genres.find(g => g.id.toString() === value);
+        if (!genre) return;
+        filterByGenre(genre.name, genre.id);
+    };
     return (
         <div className={css.container}>
-            <select
-                className={css.genres} value={genreId ?? 'all'} onChange={(e)  => {
-                const value = e.target.value;
-                if (value === "all") return filterByGenre();
-                const genre = genres.find(g => g.id.toString() === value);
-                filterByGenre(genre.name, genre.id)}}>
+            <select className={css.genres} value={genreId ?? 'all'} onChange={handleChange}>
                 <option value="all">All Genres</option>
                 {genres.map(genre => (
                     <option key={genre.id} value={genre.id}>{genre.name}</option>))}

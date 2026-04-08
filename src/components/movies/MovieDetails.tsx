@@ -1,4 +1,4 @@
-import React, {FC, PropsWithChildren, useEffect} from "react";
+import React, {FC, useEffect} from "react";
 import {MediaType, photo, poster} from "../../services";
 import {IMovie} from "../../interfaces";
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
@@ -10,7 +10,7 @@ import {FaArrowLeftLong} from "react-icons/fa6";
 import {useWindowWidth} from "../../hook/adaptiveWidth";
 
 
-interface IProps extends PropsWithChildren{
+interface IProps {
     movie:IMovie
 }
 

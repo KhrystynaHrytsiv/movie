@@ -1,6 +1,6 @@
 import {apiService} from "./apiService";
 import {MediaType, urls, MediaList} from "./urls";
-import {IImage, IMovie, IPagination, IParams, IPeople, IPerson, IRes, IVideo} from "../interfaces";
+import {IImage, IMovie, IPagination, IParams, IActor, IPerson, IRes, IVideo} from "../interfaces";
 
 
 const movieService ={
@@ -9,17 +9,16 @@ const movieService ={
     search: (query:string, page: number): IRes<IPagination<IMovie>> => apiService.get(urls.search, {params:{query, page}}),
     video: (id:number, type:MediaType):IRes<{results: IVideo[]}> => apiService.get(urls.video(id, type)),
     images: (id:number, type:MediaType):IRes<{backdrops: IImage[]}> => apiService.get(urls.images(id, type)),
-    people: (id:number, type:MediaType):IRes<{cast: IPeople[]}> => apiService.get(urls.people(id, type)),
+    people: (id:number, type:MediaType):IRes<{cast: IActor[]}> => apiService.get(urls.people(id, type)),
     person: (id: number):IRes<IPerson> => apiService.get(urls.person(id)),
 
     getAll: (type:MediaType,{page, genreId, actorId, rating, year,}:IParams): IRes<IPagination<IMovie>> => {
         const params: any = {
             page,
             ...(genreId && { with_genres: genreId }),
-            ...(actorId && { with_cast: actorId }),
+            ...(actorId && {with_cast: actorId}),
             ...(rating && { 'vote_average.gte': rating }),
-            ...(type === 'movie' && year && { primary_release_year: year }),
-            ...(type === 'tv' && year && { first_air_date_year: year }),
+            ...(year && {[type === 'movie' ? 'primary_release_year' : 'first_air_date_year']: year }),
         };
         return apiService.get(urls.discover(type), { params });
     },

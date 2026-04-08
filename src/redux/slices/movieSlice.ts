@@ -1,5 +1,5 @@
-import {createAsyncThunk, createSlice, isPending, isRejected} from "@reduxjs/toolkit";
-import {IImage, IMovie, IPagination, IParams, IPeople, IPerson, IVideo} from "../../interfaces";
+import {createAsyncThunk, createSlice, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
+import {IImage, IMovie, IPagination, IParams, IActor, IPerson, IVideo} from "../../interfaces";
 import {MediaList, MediaType, movieService} from "../../services";
 import {AxiosError} from "axios";
 import {RootState} from "../store";
@@ -12,7 +12,7 @@ interface IState {
     genreId: null,
     video: IVideo[],
     images: IImage[],
-    actors: IPeople[],
+    actors: IActor[],
     actorId: null,
     rating: null,
     year: number
@@ -129,7 +129,7 @@ const getImages = createAsyncThunk<IImage[], {id:number, type:MediaType}>(
         }
     }
 )
-const getActors = createAsyncThunk<IPeople[], {id:number, type:MediaType}>(
+const getActors = createAsyncThunk<IActor[], {id:number, type:MediaType}>(
     'movieSlice/getActors',
     async ({id, type}, {rejectWithValue}) => {
         try {
@@ -201,19 +201,19 @@ const movieSlice = createSlice({
                 state.page = action.payload.page;
                 state.total_page = action.payload.total_pages;
             })
-            .addCase(getVideo.fulfilled, (state, action) => {
+            .addCase(getVideo.fulfilled, (state, action:PayloadAction<IVideo[]>) => {
                 state.video = action.payload
             })
-            .addCase(getImages.fulfilled, (state, action)=>{
+            .addCase(getImages.fulfilled, (state, action:PayloadAction<IImage[]>)=>{
                 state.images = action.payload
             })
-            .addCase(getActors.fulfilled, (state, action)=>{
+            .addCase(getActors.fulfilled, (state, action:PayloadAction<IActor[]>)=>{
                 state.actors = action.payload
             })
-            .addCase(getMovieByType.fulfilled, (state, action)=>{
+            .addCase(getMovieByType.fulfilled, (state, action:PayloadAction<IMovie[]>)=>{
                 state.movies = action.payload
             })
-            .addCase(getActorsInfo.fulfilled, (state, action)=>{
+            .addCase(getActorsInfo.fulfilled, (state, action:PayloadAction<IPerson>)=>{
                 state.actor = action.payload
             })
             .addCase(search.fulfilled, (state, action) => {
